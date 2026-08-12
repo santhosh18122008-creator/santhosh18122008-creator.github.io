@@ -4,7 +4,7 @@ import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
-  site: 'https://santhosh18122008.github.io',
+  site: 'https://santhosh18122008-creator.github.io',
   base: '/',
   integrations: [react(), sitemap()],
   vite: {
