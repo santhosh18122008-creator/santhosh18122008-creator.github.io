@@ -1,0 +1,25 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { publishedTools } from '../../content/tools';
+---
+<BaseLayout
+  title="All Tools — Free Online Calculators | MarqDesk"
+  description="Browse all free MarqDesk tools. Simple, fast calculators and utilities for students and everyday tasks."
+>
+  <h1 class="text-3xl font-extrabold text-brand-900 dark:text-brand-100">All tools</h1>
+  <p class="mt-2 text-slate-600 dark:text-slate-400">
+    Every tool below is free, runs in your browser, and requires no account.
+  </p>
+  <div class="mt-8 grid gap-4 sm:grid-cols-2">
+    {publishedTools.map((tool) => (
+      <a
+        href={'/tools/' + tool.slug + '/'}
+        class="block rounded-lg border border-slate-200 bg-white p-6 hover:border-brand-500 dark:border-slate-800 dark:bg-slate-900"
+      >
+        <p class="text-xs font-semibold uppercase tracking-wide text-brand-600">{tool.category}</p>
+        <h2 class="mt-1 text-lg font-bold">{tool.title}</h2>
+        <p class="mt-2 text-sm text-slate-600 dark:text-slate-400">{tool.shortDescription}</p>
+      </a>
+    ))}
+  </div>
+</BaseLayout>

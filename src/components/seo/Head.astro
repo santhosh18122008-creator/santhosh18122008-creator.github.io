@@ -1,0 +1,24 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  canonical?: string;
+}
+const { title, description, canonical } = Astro.props;
+const url = canonical ?? new URL(Astro.url.pathname, import.meta.env.SITE).href;
+---
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>{title}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={url} />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="MarqDesk" />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={url} />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta name="generator" content={Astro.generator} />
