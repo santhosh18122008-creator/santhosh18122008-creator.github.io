@@ -19,6 +19,10 @@ import AgeCalculator from '../../components/islands/AgeCalculator.tsx';
 import DateDifferenceCalculator from '../../components/islands/DateDifferenceCalculator.tsx';
 import DiscountCalculator from '../../components/islands/DiscountCalculator.tsx';
 import SimpleInterestCalculator from '../../components/islands/SimpleInterestCalculator.tsx';
+import CompoundInterestCalculator from '../../components/islands/CompoundInterestCalculator.tsx';
+import EmiCalculator from '../../components/islands/EmiCalculator.tsx';
+import TipCalculator from '../../components/islands/TipCalculator.tsx';
+import GstCalculator from '../../components/islands/GstCalculator.tsx';
 
 export function getStaticPaths() {
   return publishedTools.map((tool) => ({ params: { slug: tool.slug } }));
@@ -62,6 +66,10 @@ const jsonLd = {
     {tool.component === 'date-difference-calculator' && <DateDifferenceCalculator client:load />}
     {tool.component === 'discount-calculator' && <DiscountCalculator client:load />}
     {tool.component === 'simple-interest-calculator' && <SimpleInterestCalculator client:load />}
+    {tool.component === 'compound-interest-calculator' && <CompoundInterestCalculator client:load />}
+    {tool.component === 'emi-calculator' && <EmiCalculator client:load />}
+    {tool.component === 'tip-calculator' && <TipCalculator client:load />}
+    {tool.component === 'gst-calculator' && <GstCalculator client:load />}
   </div>
 
   {tool.sections.map((section) => (
