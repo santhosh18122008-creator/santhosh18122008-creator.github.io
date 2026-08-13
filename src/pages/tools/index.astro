@@ -1,25 +1,47 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import ToolIcon from '../../components/ui/ToolIcon.astro';
 import { publishedTools } from '../../content/tools';
+
+const categoryOrder = ['student-tools', 'general-utilities', 'physics-tools', 'everyday-tools', 'finance-tools'];
+const categoryLabels: Record<string, string> = {
+  'student-tools': 'Student Tools',
+  'general-utilities': 'Everyday Utilities',
+  'physics-tools': 'Physics & Engineering',
+  'everyday-tools': 'Date & Time',
+  'finance-tools': 'Money & Finance',
+};
+const groups = categoryOrder
+  .map((c) => ({ category: c, label: categoryLabels[c], tools: publishedTools.filter((t) => t.category === c) }))
+  .filter((g) => g.tools.length > 0);
 ---
 <BaseLayout
-  title="All Tools — Free Online Calculators | MarqDesk"
-  description="Browse all free MarqDesk tools. Simple, fast calculators and utilities for students and everyday tasks."
+  title="All Tools — Free Online Calculators & Utilities | MarqDesk"
+  description="Browse all free MarqDesk tools. Simple, fast calculators and utilities for students and everyday tasks. No account required."
 >
-  <h1 class="text-3xl font-extrabold text-brand-900 dark:text-brand-100">All tools</h1>
-  <p class="mt-2 text-slate-600 dark:text-slate-400">
-    Every tool below is free, runs in your browser, and requires no account.
-  </p>
-  <div class="mt-8 grid gap-4 sm:grid-cols-2">
-    {publishedTools.map((tool) => (
-      <a
-        href={'/tools/' + tool.slug + '/'}
-        class="block rounded-lg border border-slate-200 bg-white p-6 hover:border-brand-500 dark:border-slate-800 dark:bg-slate-900"
-      >
-        <p class="text-xs font-semibold uppercase tracking-wide text-brand-600">{tool.category}</p>
-        <h2 class="mt-1 text-lg font-bold">{tool.title}</h2>
-        <p class="mt-2 text-sm text-slate-600 dark:text-slate-400">{tool.shortDescription}</p>
-      </a>
-    ))}
+  <div class="py-12 text-center sm:py-16">
+    <h1 class="text-4xl font-extrabold tracking-tight">All tools</h1>
+    <p class="mx-auto mt-3 max-w-xl text-slate-600 dark:text-slate-400">
+      {publishedTools.length} free tools. Every one runs in your browser — no account, no install.
+    </p>
   </div>
+
+  {groups.map((group) => (
+    <section class="mt-10" aria-labelledby={'tools-' + group.category}>
+      <h2 id={'tools-' + group.category} class="text-xl font-bold tracking-tight">{group.label}</h2>
+      <div class="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {group.tools.map((tool) => (
+          <a href={'/tools/' + tool.slug + '/'} class="card group flex flex-col p-5">
+            <div class="flex items-start justify-between">
+              <span class="icon-badge"><ToolIcon name={tool.slug} /></span>
+              <span class="text-xs font-semibold text-slate-400">Free</span>
+            </div>
+            <h3 class="mt-4 font-bold text-slate-900 dark:text-white">{tool.title}</h3>
+            <p class="mt-1.5 text-sm leading-relaxed text-slate-600 dark:text-slate-400">{tool.shortDescription}</p>
+          </a>
+        ))}
+      </div>
+    </section>
+  ))}
+  <div class="h-4"></div>
 </BaseLayout>
