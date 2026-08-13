@@ -4,6 +4,8 @@ import { publishedTools, getTool } from '../../content/tools';
 import PercentageCalculator from '../../components/islands/PercentageCalculator.tsx';
 import GradeCalculator from '../../components/islands/GradeCalculator.tsx';
 import GpaCalculator from '../../components/islands/GpaCalculator.tsx';
+import AttendanceCalculator from '../../components/islands/AttendanceCalculator.tsx';
+import AverageCalculator from '../../components/islands/AverageCalculator.tsx';
 
 export function getStaticPaths() {
   return publishedTools.map((tool) => ({ params: { slug: tool.slug } }));
@@ -39,6 +41,8 @@ const jsonLd = {
     {tool.component === 'percentage-calculator' && <PercentageCalculator client:load />}
     {tool.component === 'grade-calculator' && <GradeCalculator client:load />}
     {tool.component === 'gpa-calculator' && <GpaCalculator client:load />}
+    {tool.component === 'attendance-calculator' && <AttendanceCalculator client:load />}
+    {tool.component === 'average-calculator' && <AverageCalculator client:load />}
   </div>
 
   {tool.sections.map((section) => (
