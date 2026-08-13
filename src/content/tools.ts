@@ -2,112 +2,25 @@ export interface ToolFaq { q: string; a: string; }
 export interface ToolSection { heading: string; body: string; }
 
 export type ToolComponent = 
-  | 'percentage-calculator' 
-  | 'grade-calculator' 
-  | 'gpa-calculator'
-  | 'attendance-calculator'
-  | 'average-calculator';
+  | 'percentage-calculator' | 'grade-calculator' | 'gpa-calculator'
+  | 'attendance-calculator' | 'average-calculator' | 'study-timer' | 'unit-converter';
 
 export interface Tool {
-  slug: string;
-  title: string;
-  category: string;
-  shortDescription: string;
-  seoTitle: string;
-  seoDescription: string;
-  featured: boolean;
-  status: 'draft' | 'published';
-  component: ToolComponent;
-  intro: string;
-  sections: ToolSection[];
-  faqs: ToolFaq[];
+  slug: string; title: string; category: string; shortDescription: string;
+  seoTitle: string; seoDescription: string; featured: boolean;
+  status: 'draft' | 'published'; component: ToolComponent;
+  intro: string; sections: ToolSection[]; faqs: ToolFaq[];
 }
 
 export const tools: Tool[] = [
-  {
-    slug: 'percentage-calculator',
-    title: 'Percentage Calculator',
-    category: 'student-tools',
-    shortDescription: 'Calculate X% of a number, what percent X is of Y, and percentage change.',
-    seoTitle: 'Percentage Calculator — Free Online Tool | MarqDesk',
-    seoDescription: 'Free percentage calculator with three modes: find X% of Y, find what percent X is of Y, and calculate percentage increase or decrease.',
-    featured: true,
-    status: 'published',
-    component: 'percentage-calculator',
-    intro: 'Use this free percentage calculator to solve the three most common percentage problems. Everything runs directly in your browser.',
-    sections: [
-      { heading: 'What is a percentage?', body: 'A percentage is a way of expressing a number as a fraction of 100.' },
-      { heading: 'The formulas', body: '1) X% of Y = (X ÷ 100) × Y. 2) X is what percent of Y = (X ÷ Y) × 100. 3) Percentage change = ((New − Original) ÷ |Original|) × 100.' },
-    ],
-    faqs: [{ q: 'Is this calculator free?', a: 'Yes, it runs entirely in your browser.' }],
-  },
-  {
-    slug: 'grade-calculator',
-    title: 'Grade Calculator',
-    category: 'student-tools',
-    shortDescription: 'Convert marks obtained out of maximum marks into a percentage and a letter grade.',
-    seoTitle: 'Grade Calculator — Marks to Percentage and Letter Grade | MarqDesk',
-    seoDescription: 'Free grade calculator for students. Enter marks obtained and maximum marks to see your percentage and letter grade instantly.',
-    featured: false,
-    status: 'published',
-    component: 'grade-calculator',
-    intro: 'Enter the marks you obtained and the maximum possible marks, and this calculator shows your percentage together with the matching letter grade.',
-    sections: [
-      { heading: 'Grading scale used', body: 'A+ = 90–100%, A = 80–89.99%, B = 70–79.99%, C = 60–69.99%, D = 50–59.99%, F = below 50%.' },
-    ],
-    faqs: [{ q: 'Is this grading scale universal?', a: 'No. Scales differ by institution.' }],
-  },
-  {
-    slug: 'gpa-calculator',
-    title: 'GPA Calculator',
-    category: 'student-tools',
-    shortDescription: 'Calculate your GPA on the 4.0 scale from letter grades and credit hours.',
-    seoTitle: 'GPA Calculator — 4.0 Scale with Credits | MarqDesk',
-    seoDescription: 'Free GPA calculator for students. Add your courses with letter grades and credit hours to calculate your GPA on the 4.0 scale instantly.',
-    featured: false,
-    status: 'published',
-    component: 'gpa-calculator',
-    intro: 'Add one row per course, choose the letter grade, enter the credit hours, and calculate your grade point average on the standard 4.0 scale.',
-    sections: [
-      { heading: 'Grade point values used', body: 'A = 4.0, A− = 3.7, B+ = 3.3, B = 3.0, B− = 2.7, C+ = 2.3, C = 2.0, C− = 1.7, D+ = 1.3, D = 1.0, F = 0.0.' },
-    ],
-    faqs: [{ q: 'Which grading scale is used?', a: 'The common 4.0 scale with plus and minus grades.' }],
-  },
-  {
-    slug: 'attendance-calculator',
-    title: 'Attendance Calculator',
-    category: 'student-tools',
-    shortDescription: 'Calculate your current attendance percentage and find out how many classes you need to attend or can skip.',
-    seoTitle: 'Attendance Calculator — Reach Your Target Percentage | MarqDesk',
-    seoDescription: 'Free attendance calculator for students. Find your current attendance percentage and see how many classes you need to attend to reach your target (e.g. 75%).',
-    featured: false,
-    status: 'published',
-    component: 'attendance-calculator',
-    intro: 'Find out if your attendance meets your required target, how many consecutive classes you need to attend if you are short, or how many classes you can safely skip.',
-    sections: [
-      { heading: 'How it works', body: 'The calculator compares your current ratio of attended classes to total classes against your target percentage. If you are above the target, it calculates how many consecutive absences you can afford while staying above the target. If you are below, it calculates how many consecutive classes you must attend to catch up.' },
-    ],
-    faqs: [{ q: 'What is the default target?', a: 'The default target is 75%, which is a common requirement in many universities. You can change it to any value between 1 and 100.' }],
-  },
-  {
-    slug: 'average-calculator',
-    title: 'Average Calculator',
-    category: 'student-tools',
-    shortDescription: 'Calculate the mean, sum, and count for a list of numbers instantly.',
-    seoTitle: 'Average Calculator — Mean, Sum, and Count | MarqDesk',
-    seoDescription: 'Free average calculator. Add a list of numbers to find their mathematical mean, sum, and count instantly. No sign-up required.',
-    featured: false,
-    status: 'published',
-    component: 'average-calculator',
-    intro: 'Add as many numbers as you need. This calculator will instantly compute the mathematical mean (average), the total sum, and the count of values.',
-    sections: [
-      { heading: 'The formula', body: 'Mean = (Sum of all values) ÷ (Number of values). The calculator performs this addition and division exactly, avoiding floating point artifacts for standard decimal values.' },
-    ],
-    faqs: [{ q: 'How many numbers can I add?', a: 'You can add up to 50 numbers at once.' }],
-  },
+  { slug: 'percentage-calculator', title: 'Percentage Calculator', category: 'student-tools', shortDescription: 'Calculate X% of a number, what percent X is of Y, and percentage change.', seoTitle: 'Percentage Calculator — Free Online Tool | MarqDesk', seoDescription: 'Free percentage calculator with three modes.', featured: true, status: 'published', component: 'percentage-calculator', intro: 'Use this free percentage calculator to solve the three most common percentage problems.', sections: [{ heading: 'What is a percentage?', body: 'A percentage is a way of expressing a number as a fraction of 100.' }], faqs: [{ q: 'Is this calculator free?', a: 'Yes, it runs entirely in your browser.' }] },
+  { slug: 'grade-calculator', title: 'Grade Calculator', category: 'student-tools', shortDescription: 'Convert marks obtained into a percentage and a letter grade.', seoTitle: 'Grade Calculator — Marks to Percentage and Letter Grade | MarqDesk', seoDescription: 'Free grade calculator for students.', featured: false, status: 'published', component: 'grade-calculator', intro: 'Enter marks obtained and maximum possible marks to see your percentage and letter grade.', sections: [{ heading: 'Grading scale used', body: 'A+ = 90–100%, A = 80–89.99%, B = 70–79.99%, C = 60–69.99%, D = 50–59.99%, F = below 50%.' }], faqs: [{ q: 'Is this grading scale universal?', a: 'No. Scales differ by institution.' }] },
+  { slug: 'gpa-calculator', title: 'GPA Calculator', category: 'student-tools', shortDescription: 'Calculate your GPA on the 4.0 scale from letter grades and credit hours.', seoTitle: 'GPA Calculator — 4.0 Scale with Credits | MarqDesk', seoDescription: 'Free GPA calculator for students.', featured: false, status: 'published', component: 'gpa-calculator', intro: 'Add one row per course, choose the letter grade, and calculate your GPA on the 4.0 scale.', sections: [{ heading: 'Grade point values used', body: 'A = 4.0, A− = 3.7, B+ = 3.3, B = 3.0, B− = 2.7, C+ = 2.3, C = 2.0, C− = 1.7, D+ = 1.3, D = 1.0, F = 0.0.' }], faqs: [{ q: 'Which grading scale is used?', a: 'The common 4.0 scale with plus and minus grades.' }] },
+  { slug: 'attendance-calculator', title: 'Attendance Calculator', category: 'student-tools', shortDescription: 'Calculate your current attendance percentage and classes needed/skippable.', seoTitle: 'Attendance Calculator — Reach Your Target Percentage | MarqDesk', seoDescription: 'Free attendance calculator for students.', featured: false, status: 'published', component: 'attendance-calculator', intro: 'Find out how many consecutive classes you need to attend, or can safely skip, to hit your target.', sections: [{ heading: 'How it works', body: 'The calculator compares your current ratio against your target percentage.' }], faqs: [{ q: 'What is the default target?', a: '75%, which is a common university requirement.' }] },
+  { slug: 'average-calculator', title: 'Average Calculator', category: 'student-tools', shortDescription: 'Calculate the mean, sum, and count for a list of numbers.', seoTitle: 'Average Calculator — Mean, Sum, and Count | MarqDesk', seoDescription: 'Free average calculator.', featured: false, status: 'published', component: 'average-calculator', intro: 'Add as many numbers as you need to instantly compute the mathematical mean, sum, and count.', sections: [{ heading: 'The formula', body: 'Mean = (Sum of all values) ÷ (Number of values).' }], faqs: [{ q: 'How many numbers can I add?', a: 'Up to 50 numbers at once.' }] },
+  { slug: 'study-timer', title: 'Study Timer', category: 'student-tools', shortDescription: 'A simple Pomodoro-style focus timer to help you study effectively.', seoTitle: 'Study Timer — Free Pomodoro Focus Timer | MarqDesk', seoDescription: 'Free online study timer with 25-minute focus and 5-minute break modes to boost productivity.', featured: false, status: 'published', component: 'study-timer', intro: 'Use this simple Pomodoro-style timer to break your study sessions into focused 25-minute intervals with 5-minute breaks. It helps prevent burnout and keeps your mind fresh.', sections: [{ heading: 'What is the Pomodoro technique?', body: 'The Pomodoro technique is a time management method that uses a timer to break work into intervals, traditionally 25 minutes in length, separated by short breaks. This trains your brain to focus for short periods and helps you stay on top of deadlines.' }], faqs: [{ q: 'Does the timer keep running if I switch tabs?', a: 'Yes, it runs in the background as long as this page remains open in your browser.' }] },
+  { slug: 'unit-converter', title: 'Unit Converter', category: 'student-tools', shortDescription: 'Convert between common units of length, mass, and temperature instantly.', seoTitle: 'Unit Converter — Length, Mass, and Temperature | MarqDesk', seoDescription: 'Free online unit converter for length (m, km, mi, ft), mass (kg, lb, oz), and temperature (C, F, K).', featured: false, status: 'published', component: 'unit-converter', intro: 'Quickly convert between metric and imperial units for length, mass, and temperature. The conversion happens live as you type, entirely within your browser.', sections: [{ heading: 'Supported units', body: 'Length: meters, centimeters, kilometers, inches, feet, miles. Mass: kilograms, grams, pounds, ounces. Temperature: Celsius, Fahrenheit, Kelvin.' }], faqs: [{ q: 'Are the conversion factors exact?', a: 'Yes, the calculator uses standard international conversion constants (e.g. 1 inch = exactly 0.0254 meters).' }] },
 ];
 
 export const publishedTools = tools.filter((t) => t.status === 'published');
-export function getTool(slug: string): Tool | undefined {
-  return publishedTools.find((t) => t.slug === slug);
-}
+export function getTool(slug: string): Tool | undefined { return publishedTools.find((t) => t.slug === slug); }

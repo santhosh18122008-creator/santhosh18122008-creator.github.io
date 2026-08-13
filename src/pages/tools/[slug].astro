@@ -6,32 +6,27 @@ import GradeCalculator from '../../components/islands/GradeCalculator.tsx';
 import GpaCalculator from '../../components/islands/GpaCalculator.tsx';
 import AttendanceCalculator from '../../components/islands/AttendanceCalculator.tsx';
 import AverageCalculator from '../../components/islands/AverageCalculator.tsx';
+import StudyTimer from '../../components/islands/StudyTimer.tsx';
+import UnitConverter from '../../components/islands/UnitConverter.tsx';
 
 export function getStaticPaths() {
   return publishedTools.map((tool) => ({ params: { slug: tool.slug } }));
 }
 
 const tool = getTool(Astro.params.slug as string);
-if (!tool) {
-  return new Response('Not found', { status: 404 });
-}
+if (!tool) return new Response('Not found', { status: 404 });
 
 const jsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'WebApplication',
-  name: tool.title,
-  description: tool.seoDescription,
-  applicationCategory: 'UtilityApplication',
-  operatingSystem: 'Any',
-  url: new URL('/tools/' + tool.slug + '/', import.meta.env.SITE).href,
+  '@context': 'https://schema.org', '@type': 'WebApplication', name: tool.title,
+  description: tool.seoDescription, applicationCategory: 'UtilityApplication',
+  operatingSystem: 'Any', url: new URL('/tools/' + tool.slug + '/', import.meta.env.SITE).href,
   offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
 };
 ---
 <BaseLayout title={tool.seoTitle} description={tool.seoDescription}>
   <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   <nav aria-label="Breadcrumb" class="mb-4 text-sm text-slate-500">
-    <a href="/" class="hover:underline">Home</a> / <a href="/tools/" class="hover:underline">Tools</a> /
-    <span>{tool.title}</span>
+    <a href="/" class="hover:underline">Home</a> / <a href="/tools/" class="hover:underline">Tools</a> / <span>{tool.title}</span>
   </nav>
 
   <h1 class="text-3xl font-extrabold text-brand-900 dark:text-brand-100">{tool.title}</h1>
@@ -43,6 +38,8 @@ const jsonLd = {
     {tool.component === 'gpa-calculator' && <GpaCalculator client:load />}
     {tool.component === 'attendance-calculator' && <AttendanceCalculator client:load />}
     {tool.component === 'average-calculator' && <AverageCalculator client:load />}
+    {tool.component === 'study-timer' && <StudyTimer client:load />}
+    {tool.component === 'unit-converter' && <UnitConverter client:load />}
   </div>
 
   {tool.sections.map((section) => (
