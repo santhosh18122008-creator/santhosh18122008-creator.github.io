@@ -11,6 +11,9 @@ import UnitConverter from '../../components/islands/UnitConverter.tsx';
 import PasswordGenerator from '../../components/islands/PasswordGenerator.tsx';
 import TextCounter from '../../components/islands/TextCounter.tsx';
 import QrCodeGenerator from '../../components/islands/QrCodeGenerator.tsx';
+import OhmsLawCalculator from '../../components/islands/OhmsLawCalculator.tsx';
+import KineticEnergyCalculator from '../../components/islands/KineticEnergyCalculator.tsx';
+import PotentialEnergyCalculator from '../../components/islands/PotentialEnergyCalculator.tsx';
 
 export function getStaticPaths() {
   return publishedTools.map((tool) => ({ params: { slug: tool.slug } }));
@@ -46,6 +49,9 @@ const jsonLd = {
     {tool.component === 'password-generator' && <PasswordGenerator client:load />}
     {tool.component === 'text-counter' && <TextCounter client:load />}
     {tool.component === 'qr-generator' && <QrCodeGenerator client:load />}
+    {tool.component === 'ohms-law-calculator' && <OhmsLawCalculator client:load />}
+    {tool.component === 'kinetic-energy-calculator' && <KineticEnergyCalculator client:load />}
+    {tool.component === 'potential-energy-calculator' && <PotentialEnergyCalculator client:load />}
   </div>
 
   {tool.sections.map((section) => (
