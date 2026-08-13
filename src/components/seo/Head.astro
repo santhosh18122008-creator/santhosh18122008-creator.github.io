@@ -1,4 +1,6 @@
 ---
+import { monetization } from '../../config/monetization';
+
 interface Props {
   title: string;
   description: string;
@@ -22,3 +24,6 @@ const url = canonical ?? new URL(Astro.url.pathname, import.meta.env.SITE).href;
 <meta name="twitter:description" content={description} />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <meta name="generator" content={Astro.generator} />
+{monetization.searchConsoleVerification !== '' && (
+  <meta name="google-site-verification" content={monetization.searchConsoleVerification} />
+)}

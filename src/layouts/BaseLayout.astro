@@ -2,6 +2,8 @@
 import Head from '../components/seo/Head.astro';
 import Header from '../components/layout/Header.astro';
 import Footer from '../components/layout/Footer.astro';
+import CookieConsent from '../components/layout/CookieConsent.astro';
+import { monetization } from '../config/monetization';
 import '../styles/global.css';
 
 interface Props {
@@ -24,6 +26,17 @@ const { title, description, canonical } = Astro.props;
         }
       })();
     </script>
+    <script is:inline define:vars={{ enabled: monetization.adsenseEnabled, pubId: monetization.adsensePublisherId }}>
+      (function () {
+        if (!enabled || !pubId) return;
+        if (localStorage.getItem('md-consent') !== 'granted') return;
+        var s = document.createElement('script');
+        s.async = true;
+        s.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=' + pubId;
+        s.crossOrigin = 'anonymous';
+        document.head.appendChild(s);
+      })();
+    </script>
   </head>
   <body class="flex min-h-screen flex-col bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100">
     <Header />
@@ -31,5 +44,6 @@ const { title, description, canonical } = Astro.props;
       <slot />
     </main>
     <Footer />
+    <CookieConsent />
   </body>
 </html>

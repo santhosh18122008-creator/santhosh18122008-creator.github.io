@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import AdSlot from '../../components/ads/AdSlot.astro';
 import { publishedTools, getTool } from '../../content/tools';
 import PercentageCalculator from '../../components/islands/PercentageCalculator.tsx';
 import GradeCalculator from '../../components/islands/GradeCalculator.tsx';
@@ -38,6 +39,7 @@ const jsonLd = {
   <h1 class="text-3xl font-extrabold text-brand-900 dark:text-brand-100">{tool.title}</h1>
   <p class="mt-3 text-slate-600 dark:text-slate-400">{tool.intro}</p>
 
+  <AdSlot />
   <div class="mt-8">
     {tool.component === 'percentage-calculator' && <PercentageCalculator client:load />}
     {tool.component === 'grade-calculator' && <GradeCalculator client:load />}
