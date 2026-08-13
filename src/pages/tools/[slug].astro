@@ -15,6 +15,10 @@ import QrCodeGenerator from '../../components/islands/QrCodeGenerator.tsx';
 import OhmsLawCalculator from '../../components/islands/OhmsLawCalculator.tsx';
 import KineticEnergyCalculator from '../../components/islands/KineticEnergyCalculator.tsx';
 import PotentialEnergyCalculator from '../../components/islands/PotentialEnergyCalculator.tsx';
+import AgeCalculator from '../../components/islands/AgeCalculator.tsx';
+import DateDifferenceCalculator from '../../components/islands/DateDifferenceCalculator.tsx';
+import DiscountCalculator from '../../components/islands/DiscountCalculator.tsx';
+import SimpleInterestCalculator from '../../components/islands/SimpleInterestCalculator.tsx';
 
 export function getStaticPaths() {
   return publishedTools.map((tool) => ({ params: { slug: tool.slug } }));
@@ -54,6 +58,10 @@ const jsonLd = {
     {tool.component === 'ohms-law-calculator' && <OhmsLawCalculator client:load />}
     {tool.component === 'kinetic-energy-calculator' && <KineticEnergyCalculator client:load />}
     {tool.component === 'potential-energy-calculator' && <PotentialEnergyCalculator client:load />}
+    {tool.component === 'age-calculator' && <AgeCalculator client:load />}
+    {tool.component === 'date-difference-calculator' && <DateDifferenceCalculator client:load />}
+    {tool.component === 'discount-calculator' && <DiscountCalculator client:load />}
+    {tool.component === 'simple-interest-calculator' && <SimpleInterestCalculator client:load />}
   </div>
 
   {tool.sections.map((section) => (
