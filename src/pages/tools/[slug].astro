@@ -8,6 +8,8 @@ import AttendanceCalculator from '../../components/islands/AttendanceCalculator.
 import AverageCalculator from '../../components/islands/AverageCalculator.tsx';
 import StudyTimer from '../../components/islands/StudyTimer.tsx';
 import UnitConverter from '../../components/islands/UnitConverter.tsx';
+import PasswordGenerator from '../../components/islands/PasswordGenerator.tsx';
+import TextCounter from '../../components/islands/TextCounter.tsx';
 
 export function getStaticPaths() {
   return publishedTools.map((tool) => ({ params: { slug: tool.slug } }));
@@ -40,6 +42,8 @@ const jsonLd = {
     {tool.component === 'average-calculator' && <AverageCalculator client:load />}
     {tool.component === 'study-timer' && <StudyTimer client:load />}
     {tool.component === 'unit-converter' && <UnitConverter client:load />}
+    {tool.component === 'password-generator' && <PasswordGenerator client:load />}
+    {tool.component === 'text-counter' && <TextCounter client:load />}
   </div>
 
   {tool.sections.map((section) => (
