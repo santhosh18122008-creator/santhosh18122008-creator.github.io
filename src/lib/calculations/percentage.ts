@@ -1,8 +1,6 @@
-export type CalculationResult<T> = {
-  success: boolean;
-  value?: T;
-  error?: string;
-};
+import type { CalculationResult } from './types';
+
+export type { CalculationResult } from './types';
 
 export function calculatePercentageOf(x: number, y: number): CalculationResult<number> {
   if (!Number.isFinite(x) || !Number.isFinite(y)) {
