@@ -29,6 +29,12 @@ import RankPercentileCalculator from '../../components/islands/RankPercentileCal
 import SpeedDistanceTimeCalculator from '../../components/islands/SpeedDistanceTimeCalculator.tsx';
 import BmiCalculator from '../../components/islands/BmiCalculator.tsx';
 import RandomNumberGenerator from '../../components/islands/RandomNumberGenerator.tsx';
+import SgpaCalculator from '../../components/islands/SgpaCalculator.tsx';
+import GradePredictor from '../../components/islands/GradePredictor.tsx';
+import CaseConverter from '../../components/islands/CaseConverter.tsx';
+import TeamSplitter from '../../components/islands/TeamSplitter.tsx';
+import ColorConverter from '../../components/islands/ColorConverter.tsx';
+
 
 export function getStaticPaths() {
   return publishedTools.map((tool) => ({ params: { slug: tool.slug } }));
@@ -92,6 +98,12 @@ const faqLd = {
     {tool.component === 'speed-distance-time-calculator' && <SpeedDistanceTimeCalculator client:load />}
     {tool.component === 'bmi-calculator' && <BmiCalculator client:load />}
     {tool.component === 'random-number-generator' && <RandomNumberGenerator client:load />}
+    {tool.component === 'sgpa-calculator' && <SgpaCalculator client:load />}
+    {tool.component === 'grade-predictor' && <GradePredictor client:load />}
+    {tool.component === 'case-converter' && <CaseConverter client:load />}
+    {tool.component === 'team-splitter' && <TeamSplitter client:load />}
+    {tool.component === 'color-converter' && <ColorConverter client:load />}
+
     </div>
 
     <AdSlot />
