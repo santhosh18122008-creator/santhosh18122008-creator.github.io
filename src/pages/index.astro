@@ -4,13 +4,14 @@ import ToolIcon from '../components/ui/ToolIcon.astro';
 import { publishedTools } from '../content/tools';
 import { publishedGuides } from '../content/guides';
 
-const categoryOrder = ['student-tools', 'general-utilities', 'physics-tools', 'everyday-tools', 'finance-tools'];
+const categoryOrder = ['student-tools', 'general-utilities', 'physics-tools', 'everyday-tools', 'finance-tools', 'health-tools'];
 const categoryLabels: Record<string, string> = {
   'student-tools': 'Student tools',
   'general-utilities': 'Everyday utilities',
   'physics-tools': 'Physics and engineering',
   'everyday-tools': 'Date and time',
   'finance-tools': 'Money and finance',
+  'health-tools': 'Health and fitness',
 };
 const groups = categoryOrder
   .map((c) => ({ category: c, label: categoryLabels[c], tools: publishedTools.filter((t) => t.category === c) }))

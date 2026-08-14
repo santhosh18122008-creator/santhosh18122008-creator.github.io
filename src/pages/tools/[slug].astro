@@ -24,6 +24,11 @@ import CompoundInterestCalculator from '../../components/islands/CompoundInteres
 import EmiCalculator from '../../components/islands/EmiCalculator.tsx';
 import TipCalculator from '../../components/islands/TipCalculator.tsx';
 import GstCalculator from '../../components/islands/GstCalculator.tsx';
+import CgpaToPercentageCalculator from '../../components/islands/CgpaToPercentageCalculator.tsx';
+import RankPercentileCalculator from '../../components/islands/RankPercentileCalculator.tsx';
+import SpeedDistanceTimeCalculator from '../../components/islands/SpeedDistanceTimeCalculator.tsx';
+import BmiCalculator from '../../components/islands/BmiCalculator.tsx';
+import RandomNumberGenerator from '../../components/islands/RandomNumberGenerator.tsx';
 
 export function getStaticPaths() {
   return publishedTools.map((tool) => ({ params: { slug: tool.slug } }));
@@ -82,6 +87,11 @@ const faqLd = {
       {tool.component === 'emi-calculator' && <EmiCalculator client:load />}
       {tool.component === 'tip-calculator' && <TipCalculator client:load />}
       {tool.component === 'gst-calculator' && <GstCalculator client:load />}
+    {tool.component === 'cgpa-to-percentage' && <CgpaToPercentageCalculator client:load />}
+    {tool.component === 'rank-percentile-calculator' && <RankPercentileCalculator client:load />}
+    {tool.component === 'speed-distance-time-calculator' && <SpeedDistanceTimeCalculator client:load />}
+    {tool.component === 'bmi-calculator' && <BmiCalculator client:load />}
+    {tool.component === 'random-number-generator' && <RandomNumberGenerator client:load />}
     </div>
 
     <AdSlot />

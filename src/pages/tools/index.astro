@@ -3,13 +3,14 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import ToolIcon from '../../components/ui/ToolIcon.astro';
 import { publishedTools } from '../../content/tools';
 
-const categoryOrder = ['student-tools', 'general-utilities', 'physics-tools', 'everyday-tools', 'finance-tools'];
+const categoryOrder = ['student-tools', 'general-utilities', 'physics-tools', 'everyday-tools', 'finance-tools', 'health-tools'];
 const categoryLabels: Record<string, string> = {
   'student-tools': 'Student',
   'general-utilities': 'Utilities',
   'physics-tools': 'Physics',
   'everyday-tools': 'Dates',
   'finance-tools': 'Finance',
+  'health-tools': 'Health',
 };
 ---
 <BaseLayout
