@@ -34,6 +34,12 @@ import GradePredictor from '../../components/islands/GradePredictor.tsx';
 import CaseConverter from '../../components/islands/CaseConverter.tsx';
 import TeamSplitter from '../../components/islands/TeamSplitter.tsx';
 import ColorConverter from '../../components/islands/ColorConverter.tsx';
+import SipCalculator from '../../components/islands/SipCalculator.tsx';
+import CtcToInHandCalculator from '../../components/islands/CtcToInHandCalculator.tsx';
+import FreelanceRateCalculator from '../../components/islands/FreelanceRateCalculator.tsx';
+import BreakEvenCalculator from '../../components/islands/BreakEvenCalculator.tsx';
+import IncomeTaxCalculator from '../../components/islands/IncomeTaxCalculator.tsx';
+
 
 
 export function getStaticPaths() {
@@ -103,6 +109,12 @@ const faqLd = {
     {tool.component === 'case-converter' && <CaseConverter client:load />}
     {tool.component === 'team-splitter' && <TeamSplitter client:load />}
     {tool.component === 'color-converter' && <ColorConverter client:load />}
+    {tool.component === 'sip-calculator' && <SipCalculator client:load />}
+    {tool.component === 'ctc-to-inhand' && <CtcToInHandCalculator client:load />}
+    {tool.component === 'freelance-rate' && <FreelanceRateCalculator client:load />}
+    {tool.component === 'break-even' && <BreakEvenCalculator client:load />}
+    {tool.component === 'income-tax' && <IncomeTaxCalculator client:load />}
+
 
     </div>
 

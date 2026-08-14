@@ -40,8 +40,10 @@ describe('splitIntoTeams', () => {
   it('splits 4 names into 2 teams of 2', () => {
     const r = splitIntoTeams(['A', 'B', 'C', 'D'], 2, stubRandom);
     expect(r.success).toBe(true);
-    expect(r.value?.length).toBe(2);
-    expect(r.value?.[0].length).toBe(2);
+    if (r.success) {
+      expect(r.value.length).toBe(2);
+      expect(r.value[0].length).toBe(2);
+    }
   });
   it('blocks more groups than names', () => { expect(splitIntoTeams(['A', 'B'], 3, stubRandom).success).toBe(false); });
   it('blocks empty names', () => { expect(splitIntoTeams(['  ', ''], 1, stubRandom).success).toBe(false); });

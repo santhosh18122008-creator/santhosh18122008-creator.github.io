@@ -12,7 +12,7 @@ export default function ColorConverter() {
   const handleHexChange = (val: string) => {
     setHex(val);
     const res = hexToRgb(val);
-    if (res.success) {
+    if (res.success && res.value) {
       setR(String(res.value.r));
       setG(String(res.value.g));
       setB(String(res.value.b));
