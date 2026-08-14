@@ -1,49 +1,41 @@
-<header class="sticky top-0 z-40 border-b border-slate-200/70 bg-white/80 backdrop-blur-md dark:border-slate-800/70 dark:bg-slate-950/80">
+<header class="sticky top-0 z-40 border-b border-ink/10 bg-paper/90 backdrop-blur">
   <div class="mx-auto flex h-16 max-w-5xl items-center justify-between px-4">
-    <a href="/" class="flex items-center gap-2.5 rounded-md focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500">
-      <svg class="h-8 w-8" viewBox="0 0 32 32" aria-hidden="true">
-        <defs>
-          <linearGradient id="mdlogo" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0" stop-color="#19376d" />
-            <stop offset="1" stop-color="#576cbc" />
-          </linearGradient>
-        </defs>
-        <rect width="32" height="32" rx="8" fill="url(#mdlogo)" />
-        <path d="M10 22V10l6 7 6-7v12" stroke="#fff" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+    <a href="/" class="flex items-center gap-2.5 rounded-md focus:outline-none focus-visible:ring-2 focus-visible:ring-desk">
+      <svg class="h-7 w-7" viewBox="0 0 32 32" aria-hidden="true">
+        <rect width="32" height="32" rx="7" fill="#2F5D8A" />
+        <path d="M10 22V10l6 7 6-7v12" stroke="#F7F8F5" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round" />
       </svg>
-      <span class="text-lg font-extrabold tracking-tight text-brand-900 dark:text-white">
-        Marq<span class="text-brand-500">Desk</span>
-      </span>
+      <span class="font-display text-lg font-semibold tracking-tight">MarqDesk</span>
     </a>
 
     <nav class="hidden items-center gap-6 text-sm font-medium md:flex" aria-label="Main navigation">
-      <a class="text-slate-600 transition-colors hover:text-brand-700 dark:text-slate-300 dark:hover:text-brand-400" href="/">Home</a>
-      <a class="text-slate-600 transition-colors hover:text-brand-700 dark:text-slate-300 dark:hover:text-brand-400" href="/tools/">Tools</a>
-      <a class="text-slate-600 transition-colors hover:text-brand-700 dark:text-slate-300 dark:hover:text-brand-400" href="/guides/">Guides</a>
-      <a class="text-slate-600 transition-colors hover:text-brand-700 dark:text-slate-300 dark:hover:text-brand-400" href="/about/">About</a>
-      <button id="theme-toggle" type="button" aria-label="Toggle dark mode" class="rounded-lg border border-slate-200 p-2 text-slate-600 transition-colors hover:border-brand-500 hover:text-brand-700 dark:border-slate-700 dark:text-slate-300 dark:hover:border-brand-400 dark:hover:text-brand-100">
+      <a class="text-soft transition-colors duration-150 hover:text-ink" href="/">Home</a>
+      <a class="text-soft transition-colors duration-150 hover:text-ink" href="/tools/">Tools</a>
+      <a class="text-soft transition-colors duration-150 hover:text-ink" href="/guides/">Guides</a>
+      <a class="text-soft transition-colors duration-150 hover:text-ink" href="/about/">About</a>
+      <button id="theme-toggle" type="button" aria-label="Toggle dark mode" class="rounded-lg border border-ink/10 p-2 text-soft transition-colors duration-150 hover:text-ink">
         <svg class="h-4 w-4 dark:hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
         <svg class="hidden h-4 w-4 dark:block" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
       </button>
     </nav>
 
     <div class="flex items-center gap-2 md:hidden">
-      <button id="theme-toggle-mobile" type="button" aria-label="Toggle dark mode" class="rounded-lg border border-slate-200 p-2 text-slate-600 dark:border-slate-700 dark:text-slate-300">
+      <button id="theme-toggle-mobile" type="button" aria-label="Toggle dark mode" class="rounded-lg border border-ink/10 p-2 text-soft">
         <svg class="h-4 w-4 dark:hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
         <svg class="hidden h-4 w-4 dark:block" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
       </button>
-      <button id="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu" class="rounded-lg border border-slate-200 p-2 text-slate-600 dark:border-slate-700 dark:text-slate-300">
+      <button id="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu" class="rounded-lg border border-ink/10 p-2 text-soft">
         <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
       </button>
     </div>
   </div>
 
-  <nav id="mobile-menu" class="hidden border-t border-slate-200 bg-white px-4 py-3 dark:border-slate-800 dark:bg-slate-950 md:hidden" aria-label="Mobile navigation">
+  <nav id="mobile-menu" class="hidden border-t border-ink/10 bg-paper px-4 py-3 md:hidden" aria-label="Mobile navigation">
     <div class="flex flex-col gap-1 text-sm font-medium">
-      <a class="rounded-md px-3 py-2 hover:bg-slate-100 dark:hover:bg-slate-800" href="/">Home</a>
-      <a class="rounded-md px-3 py-2 hover:bg-slate-100 dark:hover:bg-slate-800" href="/tools/">Tools</a>
-      <a class="rounded-md px-3 py-2 hover:bg-slate-100 dark:hover:bg-slate-800" href="/guides/">Guides</a>
-      <a class="rounded-md px-3 py-2 hover:bg-slate-100 dark:hover:bg-slate-800" href="/about/">About</a>
+      <a class="rounded-md px-3 py-2 text-soft hover:bg-card hover:text-ink" href="/">Home</a>
+      <a class="rounded-md px-3 py-2 text-soft hover:bg-card hover:text-ink" href="/tools/">Tools</a>
+      <a class="rounded-md px-3 py-2 text-soft hover:bg-card hover:text-ink" href="/guides/">Guides</a>
+      <a class="rounded-md px-3 py-2 text-soft hover:bg-card hover:text-ink" href="/about/">About</a>
     </div>
   </nav>
 </header>
@@ -54,11 +46,10 @@
       root.classList.toggle('dark');
       localStorage.setItem('theme', root.classList.contains('dark') ? 'dark' : 'light');
     }
-    var desktop = document.getElementById('theme-toggle');
-    var mobile = document.getElementById('theme-toggle-mobile');
-    if (desktop) desktop.addEventListener('click', toggleTheme);
-    if (mobile) mobile.addEventListener('click', toggleTheme);
-
+    var d = document.getElementById('theme-toggle');
+    var m = document.getElementById('theme-toggle-mobile');
+    if (d) d.addEventListener('click', toggleTheme);
+    if (m) m.addEventListener('click', toggleTheme);
     var menuBtn = document.getElementById('menu-toggle');
     var menu = document.getElementById('mobile-menu');
     if (menuBtn && menu) {

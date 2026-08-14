@@ -1,5 +1,7 @@
 ---
 import '@fontsource-variable/inter';
+import '@fontsource-variable/fraunces';
+import '@fontsource-variable/jetbrains-mono';
 import Head from '../components/seo/Head.astro';
 import Header from '../components/layout/Header.astro';
 import Footer from '../components/layout/Footer.astro';
@@ -7,11 +9,7 @@ import CookieConsent from '../components/layout/CookieConsent.astro';
 import { monetization } from '../config/monetization';
 import '../styles/global.css';
 
-interface Props {
-  title: string;
-  description: string;
-  canonical?: string;
-}
+interface Props { title: string; description: string; canonical?: string; }
 const { title, description, canonical } = Astro.props;
 ---
 <!doctype html>
@@ -22,9 +20,7 @@ const { title, description, canonical } = Astro.props;
       (function () {
         var stored = localStorage.getItem('theme');
         var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        if (stored === 'dark' || (!stored && prefersDark)) {
-          document.documentElement.classList.add('dark');
-        }
+        if (stored === 'dark' || (!stored && prefersDark)) document.documentElement.classList.add('dark');
       })();
     </script>
     <script is:inline define:vars={{ enabled: monetization.adsenseEnabled, pubId: monetization.adsensePublisherId }}>
@@ -39,7 +35,7 @@ const { title, description, canonical } = Astro.props;
       })();
     </script>
   </head>
-  <body class="flex min-h-screen flex-col bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100">
+  <body class="flex min-h-screen flex-col bg-paper text-ink">
     <Header />
     <main class="mx-auto w-full max-w-5xl flex-1 px-4">
       <slot />

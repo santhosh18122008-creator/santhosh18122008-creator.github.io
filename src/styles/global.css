@@ -2,53 +2,94 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+:root {
+  --paper: #F7F8F5;
+  --ink: #1B2430;
+  --card: #EDEFE9;
+}
+.dark {
+  --paper: #14181F;
+  --ink: #EDEFE9;
+  --card: #1E242E;
+}
+
+@theme inline {
+  --color-paper: var(--paper);
+  --color-ink: var(--ink);
+  --color-card: var(--card);
+  --color-desk: #2F5D8A;
+  --color-desk-dark: #2B557F;
+  --color-desk-ink: #F7F8F5;
+  --color-mark: #F5C542;
+  --color-soft: #5C6773;
+  --color-err: #B3432B;
+
+  /* Legacy island harmonization until D2 migration */
+  --color-brand-900: #2F5D8A;
+  --color-brand-800: #2B557F;
+  --color-brand-700: #2B557F;
+  --color-brand-600: #2F5D8A;
+  --color-brand-500: #3E6FA3;
+  --color-brand-400: #6C93BC;
+  --color-brand-100: #DCE6F0;
+  --color-brand-50: #EEF3F8;
+  --color-brand-950: #14181F;
+}
+
 @theme {
-  --color-brand-950: #081a33;
-  --color-brand-900: #0b2447;
-  --color-brand-800: #19376d;
-  --color-brand-700: #2c4a8a;
-  --color-brand-600: #4a5a9e;
-  --color-brand-500: #576cbc;
-  --color-brand-400: #7c8fe0;
-  --color-brand-100: #dbe4ff;
-  --color-brand-50: #eef2ff;
-
-  --font-sans: 'Inter Variable', ui-sans-serif, system-ui, -apple-system, sans-serif;
-
-  --shadow-card: 0 1px 2px rgb(16 24 40 / 0.06), 0 1px 3px rgb(16 24 40 / 0.1);
-  --shadow-card-hover: 0 12px 24px -8px rgb(11 36 71 / 0.18), 0 4px 8px -4px rgb(11 36 71 / 0.1);
+  --font-display: 'Fraunces Variable', Georgia, serif;
+  --font-sans: 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono Variable', ui-monospace, SFMono-Regular, monospace;
 }
 
 html { scroll-behavior: smooth; }
-body { @apply antialiased; }
-::selection { @apply bg-brand-500/30; }
+body { @apply bg-paper font-sans text-ink antialiased; }
+::selection { background: rgb(245 197 66 / 0.5); }
 
 @layer components {
-  .btn-primary {
-    @apply inline-flex items-center justify-center gap-2 rounded-lg bg-brand-900 px-5 py-2.5 text-sm font-semibold text-white shadow-card transition-all duration-200 hover:-translate-y-0.5 hover:bg-brand-800 hover:shadow-card-hover focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 dark:bg-brand-500 dark:hover:bg-brand-400;
+  .btn-filled {
+    @apply inline-flex items-center justify-center rounded-lg bg-desk px-5 py-2.5 text-sm font-semibold text-desk-ink transition-colors duration-150 hover:bg-desk-dark focus:outline-none focus-visible:ring-2 focus-visible:ring-desk focus-visible:ring-offset-2 focus-visible:ring-offset-paper;
   }
-  .btn-secondary {
-    @apply inline-flex items-center justify-center gap-2 rounded-lg border border-slate-300 bg-white px-5 py-2.5 text-sm font-semibold text-slate-700 transition-all duration-200 hover:-translate-y-0.5 hover:border-brand-500 hover:text-brand-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 dark:hover:border-brand-400 dark:hover:text-brand-100;
+  .btn-text {
+    @apply inline-flex items-center gap-1 rounded-md px-1 py-1 text-sm font-semibold text-desk transition-colors duration-150 hover:text-desk-dark focus:outline-none focus-visible:ring-2 focus-visible:ring-desk;
   }
-  .card {
-    @apply rounded-xl border border-slate-200 bg-white shadow-card transition-all duration-200 hover:-translate-y-1 hover:border-brand-500/60 hover:shadow-card-hover dark:border-slate-800 dark:bg-slate-900 dark:hover:border-brand-400/60;
+  .field {
+    @apply w-full rounded-lg border border-soft/30 bg-card px-3 py-2 text-ink transition-colors duration-150 placeholder:text-soft focus:border-desk focus:outline-none;
   }
-  .chip {
-    @apply inline-flex items-center gap-1.5 rounded-full border border-brand-500/30 bg-brand-50 px-3 py-1 text-xs font-semibold text-brand-700 dark:border-brand-400/30 dark:bg-brand-950 dark:text-brand-100;
+  .field-invalid { @apply border-err focus:border-err; }
+  .err-text { @apply mt-1 text-xs text-err; }
+  .card-paper {
+    @apply rounded-xl border border-ink/10 bg-card transition-colors duration-150 hover:border-desk dark:border-ink/20;
   }
-  .icon-badge {
-    @apply flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-brand-50 text-brand-700 transition-transform duration-200 group-hover:scale-110 dark:bg-brand-950 dark:text-brand-400;
+  .cat-btn {
+    @apply rounded-full border border-ink/10 px-3.5 py-1.5 text-sm font-medium text-soft transition-colors duration-150 hover:text-ink;
   }
+  .cat-btn.is-active { @apply border-desk bg-desk text-desk-ink hover:text-desk-ink; }
 }
 
-.hero-bg {
-  background:
-    radial-gradient(60rem 30rem at 50% -10%, rgb(87 108 188 / 0.16), transparent 60%),
-    linear-gradient(to right, rgb(148 163 184 / 0.09) 1px, transparent 1px),
-    linear-gradient(to bottom, rgb(148 163 184 / 0.09) 1px, transparent 1px);
-  background-size: auto, 2.5rem 2.5rem, 2.5rem 2.5rem;
+/* Signature element: the highlighter mark (design.md section 5) */
+.result-highlight {
+  position: relative;
+  display: inline-block;
+  z-index: 0;
+  padding: 0 0.18em;
 }
-
-.text-gradient {
-  @apply bg-linear-to-r from-brand-700 via-brand-500 to-brand-400 bg-clip-text text-transparent dark:from-brand-100 dark:via-brand-400 dark:to-brand-500;
+.result-highlight::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  left: 0;
+  bottom: 0.08em;
+  height: 0.52em;
+  width: 100%;
+  background: var(--color-mark);
+  mix-blend-mode: multiply;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 250ms ease-out;
+}
+.result-highlight.drawn::before { transform: scaleX(1); }
+.dark .result-highlight::before { mix-blend-mode: normal; opacity: 0.85; }
+@media (prefers-reduced-motion: reduce) {
+  .result-highlight::before { transition: none; }
 }

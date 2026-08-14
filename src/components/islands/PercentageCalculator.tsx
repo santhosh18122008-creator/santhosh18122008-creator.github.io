@@ -3,17 +3,17 @@ import {
   calculatePercentageOf,
   calculateWhatPercentage,
   calculatePercentageChange,
-  type CalculationResult,
 } from '../../lib/calculations/percentage';
 import { parseAndValidateNumber } from '../../lib/validation/number';
 import { formatNumber } from '../../lib/formatting/number';
+import ResultDisplay from './ResultDisplay';
 
 type Mode = 'of' | 'is' | 'change';
 
 const MODES: { id: Mode; label: string }[] = [
   { id: 'of', label: 'X% of Y' },
   { id: 'is', label: 'X is what % of Y' },
-  { id: 'change', label: '% Change' },
+  { id: 'change', label: '% change' },
 ];
 
 function getLabels(mode: Mode): { l1: string; l2: string } {
@@ -26,7 +26,8 @@ export default function PercentageCalculator() {
   const [mode, setMode] = useState<Mode>('of');
   const [input1, setInput1] = useState('');
   const [input2, setInput2] = useState('');
-  const [result, setResult] = useState<CalculationResult<number> | null>(null);
+  const [result, setResult] = useState<{ value: number; sentence: string } | null>(null);
+  const [error, setError] = useState('');
   const [errors, setErrors] = useState<{ i1?: string; i2?: string }>({});
 
   const labels = getLabels(mode);
@@ -34,45 +35,49 @@ export default function PercentageCalculator() {
   const switchMode = (next: Mode) => {
     setMode(next);
     setResult(null);
+    setError('');
     setErrors({});
   };
 
   const handleCalculate = () => {
     const v1 = parseAndValidateNumber(input1);
     const v2 = parseAndValidateNumber(input2);
-
     const nextErrors: { i1?: string; i2?: string } = {};
     if (!v1.valid) nextErrors.i1 = v1.error;
     if (!v2.valid) nextErrors.i2 = v2.error;
-
     setErrors(nextErrors);
-    if (nextErrors.i1 || nextErrors.i2) {
-      setResult(null);
-      return;
+    if (nextErrors.i1 || nextErrors.i2) { setResult(null); setError(''); return; }
+
+    const a = v1.num as number;
+    const b = v2.num as number;
+
+    if (mode === 'of') {
+      const r = calculatePercentageOf(a, b);
+      if (!r.success) { setError(r.error as string); setResult(null); return; }
+      setResult({ value: r.value as number, sentence: `${formatNumber(a)}% of ${formatNumber(b)} is` });
+    } else if (mode === 'is') {
+      const r = calculateWhatPercentage(a, b);
+      if (!r.success) { setError(r.error as string); setResult(null); return; }
+      setResult({ value: r.value as number, sentence: `${formatNumber(a)} is this percent of ${formatNumber(b)}:` });
+    } else {
+      const r = calculatePercentageChange(a, b);
+      if (!r.success) { setError(r.error as string); setResult(null); return; }
+      setResult({ value: r.value as number, sentence: `From ${formatNumber(a)} to ${formatNumber(b)} the change is` });
     }
-
-    let res: CalculationResult<number>;
-    if (mode === 'of') res = calculatePercentageOf(v1.num as number, v2.num as number);
-    else if (mode === 'is') res = calculateWhatPercentage(v1.num as number, v2.num as number);
-    else res = calculatePercentageChange(v1.num as number, v2.num as number);
-
-    setResult(res);
+    setError('');
   };
 
   const handleReset = () => {
     setInput1('');
     setInput2('');
     setResult(null);
+    setError('');
     setErrors({});
   };
 
-  const inputClass = (hasError: boolean) =>
-    'w-full rounded-md border bg-white px-3 py-2 tabular-nums focus:outline-none focus:ring-2 focus:ring-brand-500 dark:bg-slate-950 ' +
-    (hasError ? 'border-red-500' : 'border-slate-300 dark:border-slate-700');
-
   return (
-    <div className="rounded-lg border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900">
-      <div role="tablist" aria-label="Calculation mode" className="mb-6 flex flex-wrap gap-2 border-b border-slate-200 dark:border-slate-700">
+    <div className="rounded-xl border border-ink/10 bg-card p-6 dark:border-ink/20">
+      <div role="tablist" aria-label="Calculation mode" className="mb-6 flex flex-wrap gap-2 border-b border-ink/10">
         {MODES.map((m) => (
           <button
             key={m.id}
@@ -80,10 +85,8 @@ export default function PercentageCalculator() {
             aria-selected={mode === m.id}
             onClick={() => switchMode(m.id)}
             className={
-              'px-4 py-2 text-sm font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 ' +
-              (mode === m.id
-                ? 'border-b-2 border-brand-600 text-brand-900 dark:text-brand-100'
-                : 'text-slate-500 hover:text-slate-800 dark:hover:text-slate-200')
+              'px-4 py-2 text-sm font-medium transition-colors duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-desk ' +
+              (mode === m.id ? 'border-b-2 border-desk text-ink' : 'text-soft hover:text-ink')
             }
           >
             {m.label}
@@ -91,69 +94,53 @@ export default function PercentageCalculator() {
         ))}
       </div>
 
-      <div className="mb-6 grid grid-cols-1 gap-4 md:grid-cols-2">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
         <div>
-          <label htmlFor="calc-input-1" className="mb-1 block text-sm font-medium">
-            {labels.l1}
-          </label>
+          <label htmlFor="calc-input-1" className="mb-1 block text-sm font-medium">{labels.l1}</label>
           <input
             id="calc-input-1"
             type="text"
             inputMode="decimal"
             value={input1}
             onChange={(e) => setInput1(e.target.value)}
-            className={inputClass(Boolean(errors.i1))}
+            className={'field' + (errors.i1 ? ' field-invalid' : '')}
           />
-          {errors.i1 && <p className="mt-1 text-xs text-red-600">{errors.i1}</p>}
+          {errors.i1 && <p className="err-text">{errors.i1}</p>}
         </div>
         <div>
-          <label htmlFor="calc-input-2" className="mb-1 block text-sm font-medium">
-            {labels.l2}
-          </label>
+          <label htmlFor="calc-input-2" className="mb-1 block text-sm font-medium">{labels.l2}</label>
           <input
             id="calc-input-2"
             type="text"
             inputMode="decimal"
             value={input2}
             onChange={(e) => setInput2(e.target.value)}
-            className={inputClass(Boolean(errors.i2))}
+            className={'field' + (errors.i2 ? ' field-invalid' : '')}
           />
-          {errors.i2 && <p className="mt-1 text-xs text-red-600">{errors.i2}</p>}
+          {errors.i2 && <p className="err-text">{errors.i2}</p>}
         </div>
       </div>
 
-      <div className="mb-6 flex gap-3">
-        <button
-          onClick={handleCalculate}
-          className="rounded-md bg-brand-900 px-5 py-2 font-medium text-white hover:bg-brand-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 dark:bg-brand-500 dark:hover:bg-brand-600"
-        >
-          Calculate
-        </button>
-        <button
-          onClick={handleReset}
-          className="rounded-md border border-slate-300 px-5 py-2 hover:bg-slate-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 dark:border-slate-700 dark:hover:bg-slate-800"
-        >
-          Reset
-        </button>
+      <div className="mt-6 flex items-center gap-4">
+        <button onClick={handleCalculate} className="btn-filled">Calculate</button>
+        <button onClick={handleReset} className="btn-text">Reset</button>
       </div>
 
-      <div aria-live="polite">
-        {result && (
-          <div className="rounded-md bg-slate-100 p-4 dark:bg-slate-800">
-            {result.success ? (
-              <div className="text-center">
-                <p className="mb-1 text-sm text-slate-600 dark:text-slate-300">Result</p>
-                <p className="text-3xl font-bold tabular-nums text-brand-900 dark:text-brand-100">
-                  {formatNumber(result.value as number)}
-                  {mode !== 'of' ? '%' : ''}
-                </p>
-              </div>
-            ) : (
-              <p className="text-center font-medium text-red-600">{result.error}</p>
-            )}
-          </div>
-        )}
-      </div>
+      {error && <p className="err-text mt-4 text-sm">{error}</p>}
+
+      {result ? (
+        <div className="mt-6">
+          <ResultDisplay
+            value={formatNumber(result.value)}
+            suffix={mode !== 'of' ? '%' : undefined}
+            label={result.sentence}
+          />
+        </div>
+      ) : (
+        !error && (
+          <p className="mt-6 text-sm text-soft">Enter two values above to see your result.</p>
+        )
+      )}
     </div>
   );
 }

@@ -6,11 +6,11 @@ import { publishedGuides } from '../content/guides';
 
 const categoryOrder = ['student-tools', 'general-utilities', 'physics-tools', 'everyday-tools', 'finance-tools'];
 const categoryLabels: Record<string, string> = {
-  'student-tools': 'Student Tools',
-  'general-utilities': 'Everyday Utilities',
-  'physics-tools': 'Physics & Engineering',
-  'everyday-tools': 'Date & Time',
-  'finance-tools': 'Money & Finance',
+  'student-tools': 'Student tools',
+  'general-utilities': 'Everyday utilities',
+  'physics-tools': 'Physics and engineering',
+  'everyday-tools': 'Date and time',
+  'finance-tools': 'Money and finance',
 };
 const groups = categoryOrder
   .map((c) => ({ category: c, label: categoryLabels[c], tools: publishedTools.filter((t) => t.category === c) }))
@@ -21,73 +21,70 @@ const latestGuides = [...publishedGuides].slice(-3).reverse();
   title="MarqDesk — Free tools for students and everyday tasks"
   description="MarqDesk is a fast, free collection of simple online tools for students and everyday tasks. No sign-up and nothing to install — everything runs in your browser."
 >
-  <section class="hero-bg -mx-4 px-4 py-20 text-center sm:py-24">
-    <span class="chip">100% free · No sign-up · Private by design</span>
-    <h1 class="mx-auto mt-6 max-w-3xl text-4xl font-extrabold tracking-tight sm:text-6xl">
-      Every tool you need, <span class="text-gradient">one desk away</span>
+  <section class="py-16 text-center sm:py-20">
+    <p class="text-sm font-medium text-soft">Free, private tools that run in your browser</p>
+    <h1 class="font-display mx-auto mt-4 max-w-2xl text-4xl font-semibold tracking-tight sm:text-5xl">
+      A quiet desk for every calculation
     </h1>
-    <p class="mx-auto mt-5 max-w-2xl text-lg text-slate-600 dark:text-slate-400">
-      Calculators, converters, and generators for students and everyday life.
-      Fast, simple, and everything runs right in your browser.
+    <p class="mx-auto mt-4 max-w-xl text-soft">
+      Calculators, converters, and generators for students and everyday life. Enter your numbers, get a clear answer, and get back to work.
     </p>
-    <div class="mt-8 flex flex-wrap justify-center gap-4">
-      <a href="/tools/" class="btn-primary">Browse all {publishedTools.length} tools</a>
-      <a href="/guides/" class="btn-secondary">Read the guides</a>
+    <div class="mt-8 flex items-center justify-center gap-5">
+      <a href="/tools/" class="btn-filled">Browse the tools</a>
+      <a href="/guides/" class="btn-text">Read the guides</a>
     </div>
   </section>
 
   {groups.map((group) => (
-    <section class="mt-14" aria-labelledby={'cat-' + group.category}>
+    <section class="mt-12" aria-labelledby={'cat-' + group.category}>
       <div class="flex items-end justify-between">
-        <h2 id={'cat-' + group.category} class="text-2xl font-bold tracking-tight">{group.label}</h2>
-        <a href="/tools/" class="text-sm font-semibold text-brand-600 hover:underline">View all →</a>
+        <h2 id={'cat-' + group.category} class="font-display text-2xl font-semibold">{group.label}</h2>
+        <a href="/tools/" class="btn-text">View all</a>
       </div>
-      <div class="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <div class="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {group.tools.map((tool) => (
-          <a href={'/tools/' + tool.slug + '/'} class="card group flex flex-col p-5">
-            <div class="flex items-start justify-between">
-              <span class="icon-badge"><ToolIcon name={tool.slug} /></span>
-              <span class="text-xs font-semibold text-slate-400">Free</span>
-            </div>
-            <h3 class="mt-4 font-bold text-slate-900 dark:text-white">{tool.title}</h3>
-            <p class="mt-1.5 text-sm leading-relaxed text-slate-600 dark:text-slate-400">{tool.shortDescription}</p>
+          <a href={'/tools/' + tool.slug + '/'} class="card-paper group flex flex-col p-5">
+            <span class="text-soft transition-colors duration-150 group-hover:text-desk"><ToolIcon name={tool.slug} class="h-5 w-5" /></span>
+            <h3 class="mt-3 font-semibold">{tool.title}</h3>
+            <p class="mt-1 text-sm leading-relaxed text-soft">{tool.shortDescription}</p>
           </a>
         ))}
       </div>
     </section>
   ))}
 
-  <section class="mt-20 rounded-2xl border border-slate-200 bg-white p-8 shadow-card dark:border-slate-800 dark:bg-slate-900 sm:p-10">
-    <div class="grid gap-8 sm:grid-cols-3">
+  <section class="mt-16">
+    <h2 class="font-display text-2xl font-semibold">Why MarqDesk</h2>
+    <div class="mt-4 grid gap-8 sm:grid-cols-3">
       <div>
-        <h3 class="font-bold">⚡ Instant & lightweight</h3>
-        <p class="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-400">Static pages that load in a blink, even on slow connections and older phones.</p>
+        <h3 class="font-semibold">Instant and lightweight</h3>
+        <p class="mt-2 text-sm leading-relaxed text-soft">Static pages that load in a blink, even on slow connections and older phones.</p>
       </div>
       <div>
-        <h3 class="font-bold">🔒 Private by design</h3>
-        <p class="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-400">Calculations happen on your device. Your inputs are never uploaded or stored.</p>
+        <h3 class="font-semibold">Private by design</h3>
+        <p class="mt-2 text-sm leading-relaxed text-soft">Calculations happen on your device. Your inputs are never uploaded or stored.</p>
       </div>
       <div>
-        <h3 class="font-bold">🎓 Built for students</h3>
-        <p class="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-400">Grades, GPA, attendance, physics formulas, and more — the tools you actually use.</p>
+        <h3 class="font-semibold">Built for students</h3>
+        <p class="mt-2 text-sm leading-relaxed text-soft">Grades, GPA, attendance, physics formulas, and the math you actually use.</p>
       </div>
     </div>
   </section>
 
-  <section class="mt-14" aria-labelledby="guides-heading">
+  <section class="mt-16" aria-labelledby="guides-heading">
     <div class="flex items-end justify-between">
-      <h2 id="guides-heading" class="text-2xl font-bold tracking-tight">Latest guides</h2>
-      <a href="/guides/" class="text-sm font-semibold text-brand-600 hover:underline">All guides →</a>
+      <h2 id="guides-heading" class="font-display text-2xl font-semibold">Latest guides</h2>
+      <a href="/guides/" class="btn-text">All guides</a>
     </div>
-    <div class="mt-5 grid gap-4 sm:grid-cols-3">
+    <div class="mt-4 grid gap-4 sm:grid-cols-3">
       {latestGuides.map((guide) => (
-        <a href={'/guides/' + guide.slug + '/'} class="card group flex flex-col p-5">
-          <p class="text-xs font-semibold uppercase tracking-wide text-brand-600">Guide</p>
-          <h3 class="mt-2 font-bold leading-snug text-slate-900 dark:text-white">{guide.title}</h3>
-          <p class="mt-2 text-sm text-slate-600 dark:text-slate-400">{guide.description}</p>
+        <a href={'/guides/' + guide.slug + '/'} class="card-paper group flex flex-col p-5">
+          <p class="text-xs font-semibold uppercase tracking-wide text-soft">Guide</p>
+          <h3 class="mt-2 font-semibold leading-snug">{guide.title}</h3>
+          <p class="mt-2 text-sm text-soft">{guide.description}</p>
         </a>
       ))}
     </div>
   </section>
-  <div class="h-4"></div>
+  <div class="h-8"></div>
 </BaseLayout>
