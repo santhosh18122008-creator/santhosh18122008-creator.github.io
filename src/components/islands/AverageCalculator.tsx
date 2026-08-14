@@ -1,103 +1,82 @@
 import { useState } from 'react';
 import { calculateAverage, type AverageResult } from '../../lib/calculations/average';
-import type { CalculationResult } from '../../lib/calculations/types';
 import { parseAndValidateNumber } from '../../lib/validation/number';
 import { formatNumber } from '../../lib/formatting/number';
+import ResultDisplay from './ResultDisplay';
 
 interface Row { id: number; value: string; }
 
 export default function AverageCalculator() {
   const [rows, setRows] = useState<Row[]>([{ id: 1, value: '' }]);
   const [nextId, setNextId] = useState(2);
-  const [result, setResult] = useState<CalculationResult<AverageResult> | null>(null);
+  const [result, setResult] = useState<AverageResult | null>(null);
+  const [error, setError] = useState('');
   const [errors, setErrors] = useState<Record<number, string>>({});
 
-  const updateRow = (id: number, value: string) => setRows((prev) => prev.map((row) => (row.id === id ? { ...row, value } : row)));
+  const updateRow = (id: number, value: string) => setRows((p) => p.map((r) => r.id === id ? { ...r, value } : r));
   const addRow = () => {
     if (rows.length >= 50) return;
-    setRows((prev) => [...prev, { id: nextId, value: '' }]);
+    setRows((p) => [...p, { id: nextId, value: '' }]);
     setNextId((n) => n + 1);
-    setResult(null);
+    setResult(null); setError('');
   };
   const removeRow = (id: number) => {
     if (rows.length <= 1) return;
-    setRows((prev) => prev.filter((row) => row.id !== id));
-    setResult(null);
+    setRows((p) => p.filter((r) => r.id !== id));
+    setResult(null); setError('');
   };
 
   const handleCalculate = () => {
-    const nextErrors: Record<number, string> = {};
-    const numbers = rows.map((row) => {
-      const parsed = parseAndValidateNumber(row.value);
-      if (!parsed.valid) nextErrors[row.id] = parsed.error as string;
+    const next: Record<number, string> = {};
+    const numbers = rows.map((r) => {
+      const parsed = parseAndValidateNumber(r.value);
+      if (!parsed.valid) next[r.id] = parsed.error as string;
       return parsed.num ?? 0;
     });
-    setErrors(nextErrors);
-    if (Object.keys(nextErrors).length > 0) {
-      setResult(null);
-      return;
-    }
-    setResult(calculateAverage(numbers));
+    setErrors(next);
+    if (Object.keys(next).length > 0) { setResult(null); setError(''); return; }
+    const r = calculateAverage(numbers);
+    if (r.success) { setResult(r.value as AverageResult); setError(''); }
+    else { setResult(null); setError(r.error as string); }
   };
 
   const handleReset = () => {
     setRows([{ id: nextId, value: '' }]);
     setNextId((n) => n + 1);
-    setResult(null);
-    setErrors({});
+    setResult(null); setError(''); setErrors({});
   };
 
   return (
-    <div className="rounded-lg border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900">
-      <div className="mb-4 space-y-3">
-        {rows.map((row, index) => (
+    <div className="rounded-xl border border-ink/10 bg-card p-6 dark:border-ink/20">
+      <div className="space-y-3">
+        {rows.map((row, i) => (
           <div key={row.id} className="flex items-end gap-3">
             <div className="flex-1">
-              <label htmlFor={'avg-val-' + row.id} className="mb-1 block text-sm font-medium">Number {index + 1}</label>
-              <input
-                id={'avg-val-' + row.id}
-                type="text"
-                inputMode="decimal"
-                value={row.value}
-                onChange={(e) => updateRow(row.id, e.target.value)}
-                className={'w-full rounded-md border bg-white px-3 py-2 tabular-nums focus:outline-none focus:ring-2 focus:ring-brand-500 dark:bg-slate-950 ' + (errors[row.id] ? 'border-red-500' : 'border-slate-300 dark:border-slate-700')}
-              />
-              {errors[row.id] && <p className="mt-1 text-xs text-red-600">{errors[row.id]}</p>}
+              <label htmlFor={'avg-val-' + row.id} className="mb-1 block text-sm font-medium">Number {i + 1}</label>
+              <input id={'avg-val-' + row.id} type="text" inputMode="decimal" value={row.value} onChange={(e) => updateRow(row.id, e.target.value)} className={'field' + (errors[row.id] ? ' field-invalid' : '')} />
+              {errors[row.id] && <p className="err-text">{errors[row.id]}</p>}
             </div>
-            <button
-              onClick={() => removeRow(row.id)}
-              disabled={rows.length <= 1}
-              aria-label={'Remove number ' + (index + 1)}
-              className="rounded-md border border-slate-300 px-3 py-2 text-slate-600 hover:bg-slate-100 disabled:opacity-40 dark:border-slate-700 dark:hover:bg-slate-800"
-            >✕</button>
+            <button onClick={() => removeRow(row.id)} disabled={rows.length <= 1} aria-label={'Remove number ' + (i + 1)} className="btn-text disabled:opacity-40">Remove</button>
           </div>
         ))}
       </div>
-
-      <div className="mb-6 flex flex-wrap gap-3">
-        <button onClick={addRow} disabled={rows.length >= 50} className="rounded-md border border-brand-600 px-4 py-2 font-medium text-brand-600 hover:bg-brand-50 disabled:opacity-40 dark:hover:bg-slate-800">+ Add number</button>
-        <button onClick={handleCalculate} className="rounded-md bg-brand-900 px-5 py-2 font-medium text-white hover:bg-brand-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 dark:bg-brand-500 dark:hover:bg-brand-600">Calculate Average</button>
-        <button onClick={handleReset} className="rounded-md border border-slate-300 px-5 py-2 hover:bg-slate-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 dark:border-slate-700 dark:hover:bg-slate-800">Reset</button>
+      <div className="mt-6 flex flex-wrap items-center gap-4">
+        <button onClick={addRow} disabled={rows.length >= 50} className="btn-text disabled:opacity-40">+ Add number</button>
+        <button onClick={handleCalculate} className="btn-filled">Calculate average</button>
+        <button onClick={handleReset} className="btn-text">Reset</button>
       </div>
-
-      <div aria-live="polite">
-        {result && (
-          <div className="rounded-md bg-slate-100 p-4 dark:bg-slate-800">
-            {result.success ? (
-              <div className="text-center">
-                <p className="mb-1 text-sm text-slate-600 dark:text-slate-300">Average (Mean)</p>
-                <p className="text-3xl font-bold tabular-nums text-brand-900 dark:text-brand-100">{formatNumber((result.value as AverageResult).mean)}</p>
-                <div className="mt-2 flex justify-center gap-4 text-sm text-slate-600 dark:text-slate-300">
-                  <span>Sum: <strong className="tabular-nums">{formatNumber((result.value as AverageResult).sum)}</strong></span>
-                  <span>Count: <strong className="tabular-nums">{(result.value as AverageResult).count}</strong></span>
-                </div>
-              </div>
-            ) : (
-              <p className="text-center font-medium text-red-600">{result.error}</p>
-            )}
+      {error && <p className="err-text mt-4 text-sm">{error}</p>}
+      {result ? (
+        <div className="mt-6 space-y-3">
+          <ResultDisplay value={formatNumber(result.mean)} label="Average (mean)" />
+          <div className="flex justify-center gap-6 text-sm text-soft">
+            <span>Sum: <span className="font-mono font-semibold text-ink dark:text-paper">{formatNumber(result.sum)}</span></span>
+            <span>Count: <span className="font-mono font-semibold text-ink dark:text-paper">{result.count}</span></span>
           </div>
-        )}
-      </div>
+        </div>
+      ) : (
+        !error && <p className="mt-6 text-sm text-soft">Enter numbers above to see their average.</p>
+      )}
     </div>
   );
 }

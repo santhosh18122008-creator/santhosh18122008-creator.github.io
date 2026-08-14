@@ -1,60 +1,55 @@
 import { useState } from 'react';
 import { calculateTax, type TaxResult } from '../../lib/calculations/finance';
-import type { CalculationResult } from '../../lib/calculations/types';
 import { parseAndValidateNumber } from '../../lib/validation/number';
 import { formatNumber } from '../../lib/formatting/number';
+import ResultDisplay from './ResultDisplay';
 
 export default function GstCalculator() {
   const [amount, setAmount] = useState('');
   const [rate, setRate] = useState('18');
   const [mode, setMode] = useState<'add' | 'extract'>('add');
-  const [result, setResult] = useState<CalculationResult<TaxResult> | null>(null);
+  const [result, setResult] = useState<TaxResult | null>(null);
+  const [error, setError] = useState('');
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   const handleCalculate = () => {
     const v1 = parseAndValidateNumber(amount);
     const v2 = parseAndValidateNumber(rate);
-    const nextErrors: Record<string, string> = {};
-    if (!v1.valid) nextErrors.amount = v1.error as string;
-    if (!v2.valid) nextErrors.rate = v2.error as string;
-    setErrors(nextErrors);
-    if (Object.keys(nextErrors).length > 0) { setResult(null); return; }
-    setResult(calculateTax(v1.num as number, v2.num as number, mode));
+    const next: Record<string, string> = {};
+    if (!v1.valid) next.amount = v1.error as string;
+    if (!v2.valid) next.rate = v2.error as string;
+    setErrors(next);
+    if (Object.keys(next).length > 0) { setResult(null); setError(''); return; }
+    const r = calculateTax(v1.num as number, v2.num as number, mode);
+    if (r.success) { setResult(r.value as TaxResult); setError(''); }
+    else { setResult(null); setError(r.error as string); }
   };
-
-  const handleReset = () => { setAmount(''); setRate('18'); setMode('add'); setResult(null); setErrors({}); };
-
-  const inputClass = (k: string) =>
-    'w-full rounded-md border bg-white px-3 py-2 tabular-nums focus:outline-none focus:ring-2 focus:ring-brand-500 dark:bg-slate-950 ' +
-    (errors[k] ? 'border-red-500' : 'border-slate-300 dark:border-slate-700');
+  const handleReset = () => { setAmount(''); setRate('18'); setMode('add'); setResult(null); setError(''); setErrors({}); };
 
   return (
-    <div className="rounded-lg border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900">
-      <div className="mb-6 flex flex-wrap gap-2">
-        <button onClick={() => setMode('add')} aria-pressed={mode === 'add'} className={'rounded-md px-4 py-2 text-sm font-medium ' + (mode === 'add' ? 'bg-brand-900 text-white dark:bg-brand-500' : 'text-slate-600 hover:bg-slate-100 dark:hover:bg-slate-800')}>Add tax to price</button>
-        <button onClick={() => setMode('extract')} aria-pressed={mode === 'extract'} className={'rounded-md px-4 py-2 text-sm font-medium ' + (mode === 'extract' ? 'bg-brand-900 text-white dark:bg-brand-500' : 'text-slate-600 hover:bg-slate-100 dark:hover:bg-slate-800')}>Extract tax from price</button>
+    <div className="rounded-xl border border-ink/10 bg-card p-6 dark:border-ink/20">
+      <div className="flex flex-wrap gap-2">
+        <button onClick={() => setMode('add')} aria-pressed={mode === 'add'} className={'cat-btn ' + (mode === 'add' ? 'is-active' : '')}>Add tax to price</button>
+        <button onClick={() => setMode('extract')} aria-pressed={mode === 'extract'} className={'cat-btn ' + (mode === 'extract' ? 'is-active' : '')}>Extract tax from price</button>
       </div>
-      <div className="mb-6 grid grid-cols-1 gap-4 md:grid-cols-2">
-        <div><label htmlFor="gst-a" className="mb-1 block text-sm font-medium">{mode === 'add' ? 'Price (before tax)' : 'Price (tax included)'}</label><input id="gst-a" type="text" inputMode="decimal" value={amount} onChange={(e) => setAmount(e.target.value)} className={inputClass('amount')} />{errors.amount && <p className="mt-1 text-xs text-red-600">{errors.amount}</p>}</div>
-        <div><label htmlFor="gst-r" className="mb-1 block text-sm font-medium">Tax rate (%)</label><input id="gst-r" type="text" inputMode="decimal" value={rate} onChange={(e) => setRate(e.target.value)} className={inputClass('rate')} />{errors.rate && <p className="mt-1 text-xs text-red-600">{errors.rate}</p>}</div>
+      <div className="mt-5 grid grid-cols-1 gap-4 md:grid-cols-2">
+        <div><label htmlFor="gst-a" className="mb-1 block text-sm font-medium">{mode === 'add' ? 'Price (before tax)' : 'Price (tax included)'}</label><input id="gst-a" type="text" inputMode="decimal" value={amount} onChange={(e) => setAmount(e.target.value)} className={'field' + (errors.amount ? ' field-invalid' : '')} />{errors.amount && <p className="err-text">{errors.amount}</p>}</div>
+        <div><label htmlFor="gst-r" className="mb-1 block text-sm font-medium">Tax rate (%)</label><input id="gst-r" type="text" inputMode="decimal" value={rate} onChange={(e) => setRate(e.target.value)} className={'field' + (errors.rate ? ' field-invalid' : '')} />{errors.rate && <p className="err-text">{errors.rate}</p>}</div>
       </div>
-      <div className="mb-6 flex gap-3">
-        <button onClick={handleCalculate} className="btn-primary">Calculate</button>
-        <button onClick={handleReset} className="btn-secondary">Reset</button>
+      <div className="mt-6 flex items-center gap-4">
+        <button onClick={handleCalculate} className="btn-filled">Calculate</button>
+        <button onClick={handleReset} className="btn-text">Reset</button>
       </div>
-      <div aria-live="polite">
-        {result && (
-          <div className="rounded-md bg-slate-100 p-4 dark:bg-slate-800">
-            {result.success ? (
-              <div className="grid grid-cols-3 gap-3 text-center">
-                <div><p className="text-sm text-slate-600 dark:text-slate-300">Base price</p><p className="text-2xl font-bold tabular-nums text-brand-900 dark:text-brand-100">{formatNumber((result.value as TaxResult).base, 2)}</p></div>
-                <div><p className="text-sm text-slate-600 dark:text-slate-300">Tax</p><p className="text-2xl font-bold tabular-nums text-brand-900 dark:text-brand-100">{formatNumber((result.value as TaxResult).tax, 2)}</p></div>
-                <div><p className="text-sm text-slate-600 dark:text-slate-300">Total</p><p className="text-2xl font-bold tabular-nums text-brand-900 dark:text-brand-100">{formatNumber((result.value as TaxResult).total, 2)}</p></div>
-              </div>
-            ) : <p className="text-center font-medium text-red-600">{result.error}</p>}
+      {error && <p className="err-text mt-4 text-sm">{error}</p>}
+      {result && (
+        <div className="mt-6 space-y-3">
+          <ResultDisplay value={formatNumber(result.tax, 2)} label="Tax amount" />
+          <div className="flex justify-center gap-6 text-sm text-soft">
+            <span>Base price: <span className="font-mono font-semibold text-ink dark:text-paper">{formatNumber(result.base, 2)}</span></span>
+            <span>Total: <span className="font-mono font-semibold text-ink dark:text-paper">{formatNumber(result.total, 2)}</span></span>
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 }
