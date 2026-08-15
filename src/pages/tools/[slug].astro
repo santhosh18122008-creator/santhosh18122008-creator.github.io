@@ -44,6 +44,15 @@ import WorkingDaysCalculator from '../../components/islands/WorkingDaysCalculato
 import SleepCycleCalculator from '../../components/islands/SleepCycleCalculator.tsx';
 import AgeGapCalculator from '../../components/islands/AgeGapCalculator.tsx';
 import TimeAddSubtract from '../../components/islands/TimeAddSubtract.tsx';
+import ProjectileMotionCalculator from '../../components/islands/ProjectileMotionCalculator.tsx';
+import DensityCalculator from '../../components/islands/DensityCalculator.tsx';
+import WorkPowerCalculator from '../../components/islands/WorkPowerCalculator.tsx';
+import BmrCalculator from '../../components/islands/BmrCalculator.tsx';
+import WaterIntakeCalculator from '../../components/islands/WaterIntakeCalculator.tsx';
+import IdealWeightCalculator from '../../components/islands/IdealWeightCalculator.tsx';
+import PregnancyDueDateCalculator from '../../components/islands/PregnancyDueDateCalculator.tsx';
+import FireCalculator from '../../components/islands/FireCalculator.tsx';
+
 
 
 
@@ -125,6 +134,15 @@ const faqLd = {
     {tool.component === 'sleep-cycle-calculator' && <SleepCycleCalculator client:load />}
     {tool.component === 'age-gap-calculator' && <AgeGapCalculator client:load />}
     {tool.component === 'time-math-calculator' && <TimeAddSubtract client:load />}
+    {tool.component === 'projectile-motion' && <ProjectileMotionCalculator client:load />}
+    {tool.component === 'density-calculator' && <DensityCalculator client:load />}
+    {tool.component === 'work-power-calculator' && <WorkPowerCalculator client:load />}
+    {tool.component === 'bmr-calculator' && <BmrCalculator client:load />}
+    {tool.component === 'water-intake-calculator' && <WaterIntakeCalculator client:load />}
+    {tool.component === 'ideal-weight-calculator' && <IdealWeightCalculator client:load />}
+    {tool.component === 'pregnancy-due-date' && <PregnancyDueDateCalculator client:load />}
+    {tool.component === 'fire-calculator' && <FireCalculator client:load />}
+
 
 
 
