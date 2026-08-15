@@ -52,6 +52,12 @@ import WaterIntakeCalculator from '../../components/islands/WaterIntakeCalculato
 import IdealWeightCalculator from '../../components/islands/IdealWeightCalculator.tsx';
 import PregnancyDueDateCalculator from '../../components/islands/PregnancyDueDateCalculator.tsx';
 import FireCalculator from '../../components/islands/FireCalculator.tsx';
+import BodyFatCalculator from '../../components/islands/BodyFatCalculator.tsx';
+import HeartRateZonesCalculator from '../../components/islands/HeartRateZonesCalculator.tsx';
+import WaistToHipCalculator from '../../components/islands/WaistToHipCalculator.tsx';
+import OneRepMaxCalculator from '../../components/islands/OneRepMaxCalculator.tsx';
+import PaceCalculator from '../../components/islands/PaceCalculator.tsx';
+
 
 
 
@@ -142,6 +148,12 @@ const faqLd = {
     {tool.component === 'ideal-weight-calculator' && <IdealWeightCalculator client:load />}
     {tool.component === 'pregnancy-due-date' && <PregnancyDueDateCalculator client:load />}
     {tool.component === 'fire-calculator' && <FireCalculator client:load />}
+    {tool.component === 'body-fat-calculator' && <BodyFatCalculator client:load />}
+    {tool.component === 'heart-rate-zones' && <HeartRateZonesCalculator client:load />}
+    {tool.component === 'waist-to-hip-ratio' && <WaistToHipCalculator client:load />}
+    {tool.component === 'one-rep-max' && <OneRepMaxCalculator client:load />}
+    {tool.component === 'pace-calculator' && <PaceCalculator client:load />}
+
 
 
 
