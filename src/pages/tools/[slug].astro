@@ -39,6 +39,12 @@ import CtcToInHandCalculator from '../../components/islands/CtcToInHandCalculato
 import FreelanceRateCalculator from '../../components/islands/FreelanceRateCalculator.tsx';
 import BreakEvenCalculator from '../../components/islands/BreakEvenCalculator.tsx';
 import IncomeTaxCalculator from '../../components/islands/IncomeTaxCalculator.tsx';
+import CountdownTimer from '../../components/islands/CountdownTimer.tsx';
+import WorkingDaysCalculator from '../../components/islands/WorkingDaysCalculator.tsx';
+import SleepCycleCalculator from '../../components/islands/SleepCycleCalculator.tsx';
+import AgeGapCalculator from '../../components/islands/AgeGapCalculator.tsx';
+import TimeAddSubtract from '../../components/islands/TimeAddSubtract.tsx';
+
 
 
 
@@ -114,6 +120,12 @@ const faqLd = {
     {tool.component === 'freelance-rate' && <FreelanceRateCalculator client:load />}
     {tool.component === 'break-even' && <BreakEvenCalculator client:load />}
     {tool.component === 'income-tax' && <IncomeTaxCalculator client:load />}
+    {tool.component === 'countdown-timer' && <CountdownTimer client:load />}
+    {tool.component === 'working-days-calculator' && <WorkingDaysCalculator client:load />}
+    {tool.component === 'sleep-cycle-calculator' && <SleepCycleCalculator client:load />}
+    {tool.component === 'age-gap-calculator' && <AgeGapCalculator client:load />}
+    {tool.component === 'time-math-calculator' && <TimeAddSubtract client:load />}
+
 
 
     </div>
