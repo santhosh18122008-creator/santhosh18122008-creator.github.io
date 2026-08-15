@@ -61,6 +61,8 @@ import TimeZoneConverter from '../../components/islands/TimeZoneConverter.tsx';
 import AssignmentTracker from '../../components/islands/AssignmentTracker.tsx';
 import FlashcardMaker from '../../components/islands/FlashcardMaker.tsx';
 import BudgetTracker from '../../components/islands/BudgetTracker.tsx';
+import CurrencyConverter from '../../components/islands/CurrencyConverter.tsx';
+import CitationGenerator from '../../components/islands/CitationGenerator.tsx';
 
 
 
@@ -162,6 +164,8 @@ const faqLd = {
     {tool.component === 'assignment-tracker' && <AssignmentTracker client:load />}
     {tool.component === 'flashcard-maker' && <FlashcardMaker client:load />}
     {tool.component === 'budget-tracker' && <BudgetTracker client:load />}
+    {tool.component === 'currency-converter' && <CurrencyConverter client:load />}
+    {tool.component === 'citation-generator' && <CitationGenerator client:load />}
 
 
 
