@@ -71,25 +71,35 @@ body { @apply bg-paper font-sans text-ink antialiased; }
 .result-highlight {
   position: relative;
   display: inline-block;
-  z-index: 0;
-  padding: 0 0.18em;
+  z-index: 0; /* Crucial: Creates a local stacking context so z-index: -1 sits behind text, NOT behind the card background */
+  padding: 0 0.15em;
 }
 .result-highlight::before {
   content: "";
   position: absolute;
   z-index: -1;
-  left: 0;
-  bottom: 0.08em;
-  height: 0.52em;
-  width: 100%;
+  left: -0.05em;
+  right: -0.05em;
+  bottom: 0.18em; /* Sits perfectly under the baseline */
+  height: 0.35em; /* Only highlights the bottom half, like a real marker stroke */
   background: var(--color-mark);
   mix-blend-mode: multiply;
+  opacity: 0.85; /* Translucent ink */
   transform: scaleX(0);
   transform-origin: left center;
-  transition: transform 250ms ease-out;
+  transition: transform 400ms cubic-bezier(0.2, 0.8, 0.2, 1); /* Snappy, organic "flick of the wrist" ease-out */
+  border-radius: 0.25em; /* Slight softness to mimic a felt tip */
 }
 .result-highlight.drawn::before { transform: scaleX(1); }
-.dark .result-highlight::before { mix-blend-mode: normal; opacity: 0.85; }
+
+.dark .result-highlight::before {
+  mix-blend-mode: normal;
+  opacity: 0.2; /* Low opacity so dark-mode text remains crisp and readable */
+  bottom: 0.05em;
+  height: 0.7em;
+  background: #E0B030; /* Slightly warmer/darker gold for dark mode contrast */
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .result-highlight::before { transition: none; }
+  .result-highlight::before { transition: none; transform: scaleX(1); }
 }
