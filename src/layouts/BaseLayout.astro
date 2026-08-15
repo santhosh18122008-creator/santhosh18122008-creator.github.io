@@ -9,7 +9,11 @@ import CookieConsent from '../components/layout/CookieConsent.astro';
 import { monetization } from '../config/monetization';
 import '../styles/global.css';
 
-interface Props { title: string; description: string; canonical?: string; }
+interface Props {
+  title: string;
+  description: string;
+  canonical?: string;
+}
 const { title, description, canonical } = Astro.props;
 ---
 <!doctype html>
@@ -20,7 +24,9 @@ const { title, description, canonical } = Astro.props;
       (function () {
         var stored = localStorage.getItem('theme');
         var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        if (stored === 'dark' || (!stored && prefersDark)) document.documentElement.classList.add('dark');
+        if (stored === 'dark' || (!stored && prefersDark)) {
+          document.documentElement.classList.add('dark');
+        }
       })();
     </script>
     <script is:inline define:vars={{ enabled: monetization.adsenseEnabled, pubId: monetization.adsensePublisherId }}>

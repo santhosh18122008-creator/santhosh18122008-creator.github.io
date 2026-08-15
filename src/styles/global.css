@@ -24,7 +24,7 @@
   --color-soft: #5C6773;
   --color-err: #B3432B;
 
-  /* Legacy island harmonization until D2 migration */
+  --color-brand-950: #14181F;
   --color-brand-900: #2F5D8A;
   --color-brand-800: #2B557F;
   --color-brand-700: #2B557F;
@@ -33,7 +33,6 @@
   --color-brand-400: #6C93BC;
   --color-brand-100: #DCE6F0;
   --color-brand-50: #EEF3F8;
-  --color-brand-950: #14181F;
 }
 
 @theme {
@@ -71,7 +70,7 @@ body { @apply bg-paper font-sans text-ink antialiased; }
 .result-highlight {
   position: relative;
   display: inline-block;
-  z-index: 0; /* Crucial: Creates a local stacking context so z-index: -1 sits behind text, NOT behind the card background */
+  z-index: 0; /* Creates a local stacking context so the mark sits behind the text, not behind the card */
   padding: 0 0.15em;
 }
 .result-highlight::before {
@@ -80,24 +79,24 @@ body { @apply bg-paper font-sans text-ink antialiased; }
   z-index: -1;
   left: -0.05em;
   right: -0.05em;
-  bottom: 0.18em; /* Sits perfectly under the baseline */
-  height: 0.35em; /* Only highlights the bottom half, like a real marker stroke */
+  bottom: 0.18em;
+  height: 0.35em;
   background: var(--color-mark);
   mix-blend-mode: multiply;
-  opacity: 0.85; /* Translucent ink */
+  opacity: 0.85;
   transform: scaleX(0);
   transform-origin: left center;
-  transition: transform 400ms cubic-bezier(0.2, 0.8, 0.2, 1); /* Snappy, organic "flick of the wrist" ease-out */
-  border-radius: 0.25em; /* Slight softness to mimic a felt tip */
+  transition: transform 400ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  border-radius: 0.25em;
 }
 .result-highlight.drawn::before { transform: scaleX(1); }
 
 .dark .result-highlight::before {
   mix-blend-mode: normal;
-  opacity: 0.2; /* Low opacity so dark-mode text remains crisp and readable */
+  opacity: 0.2;
   bottom: 0.05em;
   height: 0.7em;
-  background: #E0B030; /* Slightly warmer/darker gold for dark mode contrast */
+  background: #E0B030;
 }
 
 @media (prefers-reduced-motion: reduce) {
