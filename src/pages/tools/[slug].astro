@@ -57,6 +57,11 @@ import HeartRateZonesCalculator from '../../components/islands/HeartRateZonesCal
 import WaistToHipCalculator from '../../components/islands/WaistToHipCalculator.tsx';
 import OneRepMaxCalculator from '../../components/islands/OneRepMaxCalculator.tsx';
 import PaceCalculator from '../../components/islands/PaceCalculator.tsx';
+import TimeZoneConverter from '../../components/islands/TimeZoneConverter.tsx';
+import AssignmentTracker from '../../components/islands/AssignmentTracker.tsx';
+import FlashcardMaker from '../../components/islands/FlashcardMaker.tsx';
+import BudgetTracker from '../../components/islands/BudgetTracker.tsx';
+
 
 
 
@@ -153,6 +158,11 @@ const faqLd = {
     {tool.component === 'waist-to-hip-ratio' && <WaistToHipCalculator client:load />}
     {tool.component === 'one-rep-max' && <OneRepMaxCalculator client:load />}
     {tool.component === 'pace-calculator' && <PaceCalculator client:load />}
+    {tool.component === 'time-zone-converter' && <TimeZoneConverter client:load />}
+    {tool.component === 'assignment-tracker' && <AssignmentTracker client:load />}
+    {tool.component === 'flashcard-maker' && <FlashcardMaker client:load />}
+    {tool.component === 'budget-tracker' && <BudgetTracker client:load />}
+
 
 
 
