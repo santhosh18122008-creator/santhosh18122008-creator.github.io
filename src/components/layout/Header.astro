@@ -7,7 +7,7 @@
       </svg>
       <span class="font-display text-lg font-semibold tracking-tight">MarqDesk</span>
     </a>
-
+  
     <nav class="hidden items-center gap-6 text-sm font-medium md:flex" aria-label="Main navigation">
       <a class="text-soft transition-colors duration-150 hover:text-ink" href="/">Home</a>
       <a class="text-soft transition-colors duration-150 hover:text-ink" href="/tools/">Tools</a>
@@ -18,7 +18,7 @@
         <svg class="hidden h-4 w-4 dark:block" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
       </button>
     </nav>
-
+  
     <div class="flex items-center gap-2 md:hidden">
       <button id="theme-toggle-mobile" type="button" aria-label="Toggle dark mode" class="rounded-lg border border-ink/10 p-2 text-soft">
         <svg class="h-4 w-4 dark:hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
@@ -30,12 +30,12 @@
     </div>
   </div>
 
-  <nav id="mobile-menu" class="hidden border-t border-ink/10 bg-paper px-4 py-3 md:hidden" aria-label="Mobile navigation">
+  <nav id="mobile-menu" class="hidden border-t border-ink/10 bg-paper px-4 py-3 md:hidden" aria-label="Mobile navigation" role="dialog" aria-modal="true">
     <div class="flex flex-col gap-1 text-sm font-medium">
-      <a class="rounded-md px-3 py-2 text-soft hover:bg-card hover:text-ink" href="/">Home</a>
-      <a class="rounded-md px-3 py-2 text-soft hover:bg-card hover:text-ink" href="/tools/">Tools</a>
-      <a class="rounded-md px-3 py-2 text-soft hover:bg-card hover:text-ink" href="/guides/">Guides</a>
-      <a class="rounded-md px-3 py-2 text-soft hover:bg-card hover:text-ink" href="/about/">About</a>
+      <a class="mobile-link rounded-md px-3 py-2 text-soft hover:bg-card hover:text-ink" href="/">Home</a>
+      <a class="mobile-link rounded-md px-3 py-2 text-soft hover:bg-card hover:text-ink" href="/tools/">Tools</a>
+      <a class="mobile-link rounded-md px-3 py-2 text-soft hover:bg-card hover:text-ink" href="/guides/">Guides</a>
+      <a class="mobile-link rounded-md px-3 py-2 text-soft hover:bg-card hover:text-ink" href="/about/">About</a>
     </div>
   </nav>
 </header>
@@ -50,12 +50,45 @@
     var m = document.getElementById('theme-toggle-mobile');
     if (d) d.addEventListener('click', toggleTheme);
     if (m) m.addEventListener('click', toggleTheme);
+    
     var menuBtn = document.getElementById('menu-toggle');
     var menu = document.getElementById('mobile-menu');
+    var mobileLinks = document.querySelectorAll('.mobile-link');
+    
     if (menuBtn && menu) {
       menuBtn.addEventListener('click', function () {
-        var open = menu.classList.toggle('hidden') === false;
-        menuBtn.setAttribute('aria-expanded', String(open));
+        var isOpen = !menu.classList.contains('hidden');
+        menu.classList.toggle('hidden');
+        menuBtn.setAttribute('aria-expanded', String(!isOpen));
+        menuBtn.setAttribute('aria-label', isOpen ? 'Open menu' : 'Close menu');
+        
+        // Focus management
+        if (!isOpen) {
+          var firstLink = menu.querySelector('a');
+          if (firstLink) firstLink.focus();
+        } else {
+          menuBtn.focus();
+        }
+      });
+      
+      // Close menu when clicking on a link
+      mobileLinks.forEach(function(link) {
+        link.addEventListener('click', function() {
+          menu.classList.add('hidden');
+          menuBtn.setAttribute('aria-expanded', 'false');
+          menuBtn.setAttribute('aria-label', 'Open menu');
+          menuBtn.focus();
+        });
+      });
+      
+      // Close menu when pressing Escape
+      menu.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+          menu.classList.add('hidden');
+          menuBtn.setAttribute('aria-expanded', 'false');
+          menuBtn.setAttribute('aria-label', 'Open menu');
+          menuBtn.focus();
+        }
       });
     }
   })();

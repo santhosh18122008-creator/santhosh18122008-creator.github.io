@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo, useCallback } from 'react';
 import QRCode from 'qrcode';
 
 export default function QrCodeGenerator() {
@@ -9,13 +9,39 @@ export default function QrCodeGenerator() {
   const [bgColor, setBgColor] = useState('#F7F8F5');
   const [dataUrl, setDataUrl] = useState('');
   const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  
+  const qrOptions = useMemo(() => ({
+    errorCorrectionLevel: errorLevel,
+    width,
+    margin: 1,
+    color: { dark: fgColor, light: bgColor }
+  }), [errorLevel, width, fgColor, bgColor]);
+
+  const generateQRCode = useCallback(async () => {
+    if (!text.trim()) { 
+      setDataUrl(''); 
+      setIsLoading(false);
+      return; 
+    }
+    
+    setIsLoading(true);
+    try {
+      const url = await QRCode.toDataURL(text, qrOptions);
+      setDataUrl(url);
+      setError('');
+    } catch {
+      setError('Text is too long for the selected error correction level.');
+      setDataUrl('');
+    } finally {
+      setIsLoading(false);
+    }
+  }, [text, qrOptions]);
 
   useEffect(() => {
-    if (!text.trim()) { setDataUrl(''); return; }
-    QRCode.toDataURL(text, { errorCorrectionLevel: errorLevel, width, margin: 1, color: { dark: fgColor, light: bgColor } })
-      .then((url) => { setDataUrl(url); setError(''); })
-      .catch(() => { setError('Text is too long for the selected error correction level.'); setDataUrl(''); });
-  }, [text, width, errorLevel, fgColor, bgColor]);
+    const timeoutId = setTimeout(generateQRCode, 300);
+    return () => clearTimeout(timeoutId);
+  }, [generateQRCode]);
 
   const handleDownload = () => {
     if (!dataUrl) return;
@@ -59,7 +85,11 @@ export default function QrCodeGenerator() {
           </div>
         </div>
         <div className="flex flex-col items-center justify-center">
-          {dataUrl ? (
+          {isLoading ? (
+            <div className="flex h-[256px] w-[256px] items-center justify-center">
+              <div className="h-8 w-8 animate-spin rounded-full border-4 border-ink/20 border-t-desk"></div>
+            </div>
+          ) : dataUrl ? (
             <>
               <img src={dataUrl} alt="Generated QR code" className="w-full max-w-[256px] rounded-md border border-ink/10" />
               <button onClick={handleDownload} className="btn-filled mt-4">Download PNG</button>

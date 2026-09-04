@@ -1,0 +1,66 @@
+---
+interface Props {
+  type?: 'WebSite' | 'WebPage' | 'Article' | 'SoftwareApplication';
+  title: string;
+  description: string;
+  url: string;
+  image?: string;
+  datePublished?: string;
+  dateModified?: string;
+  author?: string;
+}
+
+const { 
+  type = 'WebPage', 
+  title, 
+  description, 
+  url, 
+  image, 
+  datePublished, 
+  dateModified,
+  author 
+} = Astro.props;
+
+const baseUrl = 'https://santhosh18122008-creator.github.io';
+
+const structuredData: Record<string, any> = {
+  '@context': 'https://schema.org',
+  '@type': type,
+  name: title,
+  description: description,
+  url: url.startsWith('http') ? url : `${baseUrl}${url}`,
+};
+
+if (image) {
+  structuredData.image = image.startsWith('http') ? image : `${baseUrl}${image}`;
+}
+
+if (datePublished) {
+  structuredData.datePublished = datePublished;
+}
+
+if (dateModified) {
+  structuredData.dateModified = dateModified;
+}
+
+if (author) {
+  structuredData.author = {
+    '@type': 'Person',
+    name: author,
+  };
+}
+
+if (type === 'SoftwareApplication') {
+  structuredData.applicationCategory = 'CalculatorApplication';
+  structuredData.operatingSystem = 'Web Browser';
+  structuredData.offers = {
+    '@type': 'Offer',
+    price: '0',
+    priceCurrency: 'USD',
+  };
+}
+---
+
+<script is:inline type="application/ld+json">
+  {JSON.stringify(structuredData)}
+</script>
